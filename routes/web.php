@@ -17,6 +17,6 @@ $router->get('/', function () use ($router) {
 
 $router->get('/test', function() {
     return response()->json([
-        'message' => 'Hello World !'
+        'message' => 'Ce hello world vient de l\'API'
     ]);
 });
