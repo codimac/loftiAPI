@@ -15,6 +15,10 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->group(['auth'], function($router) {
+    $router->post('/signin', 'AuthController@signIn');
+});
+
 $router->get('/test', function() {
     return response()->json([
         'message' => 'Ce hello world vient de l\'API'
