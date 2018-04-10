@@ -37,8 +37,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function getJWTCustomClaims()
     {
+        var_dump($this->user_id);
+        // var_dump($this->join('role', 'user.role_id', '=', 'role.role_id')->get());
+
         return [
-            'role_label' => $this->leftJoin('role', 'user.role_id', '=', 'role.role_id')->first()->label,
+            'role_label' => $this->join('role', 'user.role_id', '=', 'role.role_id')
+                ->where('user_id', $this->user_id)
+                ->first()->label,
             'role_id' => $this->role_id
         ];
     }

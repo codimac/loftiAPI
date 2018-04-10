@@ -22,6 +22,14 @@ class UserSeeder extends Seeder
             'role_id' => 1
         ]);
 
+        DB::table('user')->insert([
+            'lastname' => 'Albert',
+            'firstname' => 'Henri',
+            'username' => 'student',
+            'password' => Hash::make('student'),
+            'role_id' => 2
+        ]);
+
         for ($i=0; $i<41; $i++) {
             $firstname = $faker->firstname;
             $lastname = $faker->unique()->lastname;
