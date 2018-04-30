@@ -11,29 +11,29 @@ class UETableSeeder extends Seeder
      */
     public function run()
     {
-       DB::table('UE')->insert([
-            'id_UE' => 1,
+       DB::table('ue')->insert([
+            'ue_id' => 1,
             'semester' => 1,
             'ects' => 2,
             'name' => "UE 1",
         ]);
 
-         DB::table('UE')->insert([
-            'id_UE' => 2,
+         DB::table('ue')->insert([
+            'ue_id' => 2,
             'semester' => 1,
             'ects' => 2,
             'name' => "UE 2",
         ]);
 
-        DB::table('UE')->insert([
-            'id_UE' => 3,
+        DB::table('ue')->insert([
+            'ue_id' => 3,
             'semester' => 2,
             'ects' => 2,
             'name' => "UE 3",
         ]);
 
-        DB::table('UE')->insert([
-            'id_UE' => 4,
+        DB::table('ue')->insert([
+            'ue_id' => 4,
             'semester' => 2,
             'ects' => 2,
             'name' => "UE 4",
