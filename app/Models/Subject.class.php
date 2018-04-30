@@ -10,7 +10,7 @@ class Subject {
 	// Name
 	private $name=null;
 	// id_UE
-	private $id_UE=null;
+	private $ue_id=null;
 	// coeff
 	private $coeff=null;
 
@@ -60,11 +60,11 @@ class Subject {
 	}
 
 	/**
-	 * Getter on the id_UE
-	 * @return string $id_UE
+	 * Getter on the ue_id
+	 * @return string $ue_id
 	 */
 	public function getIdUE() {
-		return $this->id_UE;
+		return $this->ue_id;
 	}
 
 	/**
@@ -87,9 +87,9 @@ class Subject {
 	public static function getAll() {
 		$i=0;
 		$tab = array();
-		$pdo = MyPDO::getInstance()->prepare("SELECT * FROM Subject as S INNER JOIN UE as U ON S.UE_id = U.UE_id ORDER BY U.semester, U.name ");
+		$pdo = MyPDO::getInstance()->prepare("SELECT * FROM Subject as S INNER JOIN ue as U ON S.ue_id = U.ue_id ORDER BY U.semester, U.name ");
 		$pdo->execute();
-		$pdo->setFetchMode(PDO::FETCH_CLASS,"UE");
+		$pdo->setFetchMode(PDO::FETCH_CLASS,"Subject");
 		while(($ligne = $pdo->fetch()) != false){
 			$tab[$i]=$ligne;
 			$i++;
@@ -102,16 +102,16 @@ class Subject {
 	/**
 	 * Récupère les matieres pour une UE par semestre
 	 * Tri par semestre
-	 * @param  $UE identifiant du film
-	 * @return array<Cast> liste des instances de UE
+	 * @param  $ue_id 
+	 * @return array<Subject> liste des instances de UE
 	 */
-	public static function getMatieresInUE($id_UE) {
+	public static function getSubjectInUE($ue_id) {
 
 		$i=0;
-		$pdo = MyPDO::getInstance()->prepare("SELECT * FROM Matiere as M INNER JOIN UE as U ON U.id_UE = M.id_UE WHERE M.id_UE = :id_UE ORDER BY U.semester");
-		$pdo->bindParam(':id_UE',$id);
+		$pdo = MyPDO::getInstance()->prepare("SELECT * FROM Subject as M INNER JOIN ue as U ON U.ue_id = M.ue_id WHERE M.ue_id = :ue_id ORDER BY U.semester");
+		$pdo->bindParam(':ue_id',$ue_id);
 		$pdo->execute();
-		$pdo->setFetchMode(PDO::FETCH_CLASS,"UE");
+		$pdo->setFetchMode(PDO::FETCH_CLASS,"Subject");
 		while(($ligne = $pdo->fetch()) != false){
 			$tab[$i]=$ligne;
 			$i++;

@@ -6,7 +6,7 @@ class UE {
 	/***********************ATTRIBUTS***********************/
 	
 	// Id
-	private $UE_id=null;
+	private $ue_id=null;
 	// Name
 	private $name=null;
 	// Semester
@@ -22,13 +22,13 @@ class UE {
 
 	/**
 	 * Create an instance of UE using the database
-	 * @param int $UE_id (database value)
-	 * @return UE instance corresponding to the $UE_id
-	 * @throws Exception if the $UE_id is unkown
+	 * @param int $ue_id (database value)
+	 * @return UE instance corresponding to the $ue_id
+	 * @throws Exception if the $ue_id is unkown
 	 */
-	public static function createFromId($UE_id){
-		$stmt = MyPDO::getInstance()->prepare("SELECT * FROM UE WHERE UE_id = :UE_id");
-		$stmt->bindParam(':UE_id',$UE_id);
+	public static function createFromId($ue_id){
+		$stmt = MyPDO::getInstance()->prepare("SELECT * FROM UE WHERE ue_id = :ue_id");
+		$stmt->bindParam(':ue_id',$ue_id);
 		$stmt->execute();
 		$stmt->setFetchMode(PDO::FETCH_CLASS, "UE"); 
 
@@ -48,7 +48,7 @@ class UE {
 	 * @return int $id
 	 */
 	public function getId() {
-		return $this->UE_id;
+		return $this->ue_id;
 	}
 
 	/**
@@ -87,7 +87,7 @@ class UE {
 	public static function getAll() {
 		$i=0;
 		$tab = array();
-		$pdo = MyPDO::getInstance()->prepare("SELECT * FROM UE ORDER BY semester");
+		$pdo = MyPDO::getInstance()->prepare("SELECT * FROM ue ORDER BY semester");
 		$pdo->execute();
 		$pdo->setFetchMode(PDO::FETCH_CLASS,"UE");
 		while(($ligne = $pdo->fetch()) != false){
