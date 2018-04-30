@@ -17,8 +17,8 @@ class Subject extends Migration
             $table->increments('subject_id');
             $table->string('name',100);
             $table->integer('coefficient');
-            $table->integer('UE_id')->unsigned();
-            $table->foreign('UE_id')->references('UE_id')->on('UE');
+            $table->integer('ue_id')->unsigned();
+            $table->foreign('ue_id')->references('ue_id')->on('ue');
         });
        
     }

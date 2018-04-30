@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UE extends Migration
+class ue extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class UE extends Migration
      */
     public function up()
     {
-        Schema::create('UE', function (Blueprint $table) {
-            $table->increments('UE_id');
+        Schema::create('ue', function (Blueprint $table) {
+            $table->increments('ue_id');
             $table->integer('semester');
             $table->integer('ects');
             $table->string('name', 100);
@@ -28,6 +28,6 @@ class UE extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('UE');
+        Schema::dropIfExists('ue');
     }
 }
