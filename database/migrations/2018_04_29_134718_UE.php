@@ -18,7 +18,6 @@ class UE extends Migration
             $table->integer('semester');
             $table->integer('ects');
             $table->string('name', 100);
-            
         });
     }
 

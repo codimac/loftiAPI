@@ -14,15 +14,13 @@ class Subject extends Migration
     public function up()
     {
         Schema::create('subject', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
             $table->increments('subject_id');
             $table->string('name',100);
             $table->integer('coefficient');
-            $table->integer('UE_id');
+            $table->integer('UE_id')->unsigned();
             $table->foreign('UE_id')->references('UE_id')->on('UE');
-
-            
         });
+       
     }
 
     /**
