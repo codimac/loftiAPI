@@ -19,7 +19,10 @@ $router->group(['prefix' => 'auth'], function($router) {
     $router->post('/signin', 'AuthController@signIn');
 });
 
-$router->group(['prefix' => 'users'], function($router) {
+$router->group([
+    'middleware' => 'auth:api',
+    'prefix' => 'users',
+], function($router) {
     $router->get('/me', 'UserController@getAuthUser');
 });
 
