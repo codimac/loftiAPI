@@ -17,7 +17,10 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => 'auth'], function($router) {
     $router->post('/signin', 'AuthController@signIn');
-    $router->post('/getauthuser', 'AuthController@getAuthUser');
+});
+
+$router->group(['prefix' => 'user'], function($router) {
+    $router->post('/users/me', 'AuthController@getAuthUser');
 });
 
 $router->get('/test', function() {
