@@ -1,9 +1,16 @@
 <?php
 
+namespace App\Models;
 
-class Subject {
+use Illuminate\Database\Eloquent\Model;
 
-	/***********************ATTRIBUTS***********************/
+class Subject extends Model
+{
+    protected $table = 'subject';
+    protected $primaryKey = 'subject_id';
+    public $timestamps = false;
+
+    /***********************ATTRIBUTS***********************/
 	
 	// Identifiant
 	private $subject_id=null;
@@ -17,7 +24,7 @@ class Subject {
 
 	/*********************CONSTRUCTEURS*********************/
 	
-	// Constructeur non accessible
+	// Constructor unaccessible
 	function __construct() {}
 
 	/**
@@ -118,7 +125,4 @@ class Subject {
 		}
 		return $tab;
 	}
-
-	
-
 }

@@ -1,9 +1,16 @@
 <?php
 
+namespace App\Models;
 
-class UE {
+use Illuminate\Database\Eloquent\Model;
 
-	/***********************ATTRIBUTS***********************/
+class Ue extends Model
+{
+    protected $table = 'ue';
+    protected $primaryKey = 'ue_id';
+    public $timestamps = false;
+
+    /***********************ATTRIBUTS***********************/
 	
 	// Id
 	private $ue_id=null;
@@ -17,7 +24,7 @@ class UE {
 
 	/*********************CONSTRUCTEURS*********************/
 	
-	// Constructeur non accessible
+	// Constructor unaccessible
 	function __construct() {}
 
 	/**
@@ -96,7 +103,4 @@ class UE {
 		}
 		return $tab;
 	}
-
-	
-
 }

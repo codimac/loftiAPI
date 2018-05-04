@@ -1,9 +1,16 @@
 <?php
 
+namespace App\Models;
 
-class Grade {
+use Illuminate\Database\Eloquent\Model;
 
-	/***********************ATTRIBUTS***********************/
+class Grade extends Model
+{
+    protected $table = 'grade';
+    protected $primaryKey = 'grade_id';
+    public $timestamps = false;
+
+    /***********************ATTRIBUTS***********************/
 	
 	// Identifiant
 	private $grade_id=null;
