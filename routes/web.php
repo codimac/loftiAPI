@@ -20,7 +20,7 @@ $router->group(['prefix' => 'auth'], function($router) {
 });
 
 $router->group(['prefix' => 'user'], function($router) {
-    $router->post('/users/me', 'AuthController@getAuthUser');
+    $router->post('/users/me', 'UserController@getAuthUser');
 });
 
 $router->get('/test', function() {
