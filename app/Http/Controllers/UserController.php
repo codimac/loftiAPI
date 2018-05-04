@@ -13,12 +13,6 @@ use Illuminate\Http\Response;
 
 class AuthController extends Controller {
 
-    protected $user_id;
-
-    public function __construct(User $user_id) {
-        $this->user_id = $user_id;
-    }
-
     public function getAuthUser() {
         return response()->json(Auth::user());
     }
