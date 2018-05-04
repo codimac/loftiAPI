@@ -49,6 +49,6 @@ class AuthController extends Controller {
         //    'message' => 'Blalba'
         //]);
 
-        return response()->json(compact($user));
+        return response()->json($user);
     }
 }
