@@ -40,15 +40,4 @@ class AuthController extends Controller {
 
         return response()->json(compact('token'));
     }
-
-    public function getAuthUser(Request $user_id) {
-        // SELECT * FROM `user` WHERE `user_id`= $user_id
-        $user = User::find($user_id);
-
-        //return response()->json([
-        //    'message' => 'Blalba'
-        //]);
-
-        return response()->json($user);
-    }
 }
