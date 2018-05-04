@@ -3,15 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-use Tymon\JWTAuth\JWTAuth;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\QueryException;
-use Illuminate\Http\Response;
 
-class AuthController extends Controller {
+class UserController extends Controller {
 
     protected $user_id;
 
