@@ -187,6 +187,17 @@ class Grade extends Model
     }
 
 
-   
+    /*
+	 * Update one student's grade
+     * Need to know grade_id
+	 */
+
+    public static function UpdateGradeStudent($grade_id, $new_grade) {
+		$stmt = MyPDO::getInstance()->prepare("UPDATE grade SET grade = :new_grade WHERE grade_id = :grade_id");
+		$stmt->bindParam(':new_grade',$new_grade);
+        $stmt->bindParam(':grade_id',$grade_id);
+        $stmt->execute();
+    }
+
 
 }
