@@ -26,7 +26,7 @@ class Grade extends Model
 
 	/*********************CONSTRUCTEURS*********************/
 	
-	// Constructeur non accessible
+	// Constructor unaccessible
 	function __construct() {}
 
 	/**
@@ -38,7 +38,7 @@ class Grade extends Model
 	public static function createFromId($grade_id){
 		// TO DO
 		$stmt = MyPDO::getInstance()->prepare("SELECT * FROM Grade WHERE grade_id = :grade_id");
-		$stmt->bindParam(':grade_id',$id);
+		$stmt->bindParam(':grade_id',$grade_id);
 		$stmt->execute();
 		$stmt->setFetchMode(PDO::FETCH_CLASS, "Grade"); 
 
@@ -48,7 +48,9 @@ class Grade extends Model
 		else{
 			throw new Exception("Error Processing Request", 1);
 		}
-	}
+    }
+    
+
 
 	/********************GETTERS SIMPLES********************/
 	
@@ -92,7 +94,6 @@ class Grade extends Model
 		return $this->student_id;
 	}
 
-	
 
 	/*******************GETTERS COMPLEXES*******************/
 
@@ -135,9 +136,8 @@ class Grade extends Model
 	}
 
 
-
     /**
-	 * Fetch all the Grade for ONE student
+	 * Fetch all the Grade for one student
      * Fold by semester then UE and subject
 	 * @return array<Grade> list of instance grade
 	 */
@@ -153,5 +153,40 @@ class Grade extends Model
 			$i++;
 		}
 		return $tab;
-	}
+    }
+    
+    /* Actions upons table */
+
+    /*
+	 * Add one grade to one student
+	 */
+
+    public static function addGradeStudent($grade, $coefficient, $subject_id, $student_id) {
+		$stmt = MyPDO::getInstance()->prepare("INSERT INTO grade (grade, coefficient, subject_id, student_id) VALUES (':grade',':coefficient',':subject_id',':student_id')");
+		$stmt->bindParam(':grade',$grade);
+		$stmt->bindParam(':coefficient',$coefficient);
+		$stmt->bindParam(':subject_id',$subject_id);
+		$stmt->bindParam(':student_id',$subject_id);
+        $stmt->execute();
+    }
+
+    /*
+	 * Add one grade to multiple student
+     * Need tab of student_id
+	 */
+
+    public static function addGradeStudents($grade, $coefficient, $subject_id, $tab_student_id) {
+		$stmt = MyPDO::getInstance()->prepare("INSERT INTO grade (grade, coefficient, subject_id, student_id) VALUES (':grade',':coefficient',':subject_id',':student_id')");
+		$stmt->bindParam(':grade',$grade);
+		$stmt->bindParam(':coefficient',$coefficient);
+        $stmt->bindParam(':subject_id',$subject_id);
+        foreach ($tab_student as $value) {
+           $stmt->bindParam(':student_id',$student_id); 
+           $stmt->execute();
+        }
+    }
+
+
+   
+
 }
