@@ -9,19 +9,6 @@ class Grade extends Model
     protected $table = 'grade';
     protected $primaryKey = 'grade_id';
     public $timestamps = false;
-
-    /***********************ATTRIBUTS***********************/
-	
-	// Identifiant
-	private $grade_id=null;
-	// Grade
-	private $grade=null;
-	// coeff
-	private $coefficient=null;
-	// subject
-    private $subject_id=null;
-    // student
-	private $student_id=null;
 	
 
 	/*********************CONSTRUCTEURS*********************/
@@ -36,67 +23,11 @@ class Grade extends Model
 	 * @throws Exception if the $grade_id is unkown
 	 */
 	public static function createFromId($grade_id){
-		// TO DO
-		$stmt = MyPDO::getInstance()->prepare("SELECT * FROM Grade WHERE grade_id = :grade_id");
-		$stmt->bindParam(':grade_id',$grade_id);
-		$stmt->execute();
-		$stmt->setFetchMode(PDO::FETCH_CLASS, "Grade"); 
-
-		if (($object = $stmt->fetch()) !== false){
-			return $object;
-		}
-		else{
-			throw new Exception("Error Processing Request", 1);
-		}
+		$grade = App\Subject::find($grade_id); 
+		return $grade;
     }
-    
-
-
-	/********************GETTERS SIMPLES********************/
 	
-	/**
-	 * Getter on the id
-	 * @return int $grade_id
-	 */
-	public function getId() {
-		return $this->grade_id;
-	}
-
-	/**
-	 * Getter on the value 
-	 * @return int $grade
-	 */
-	public function getGrade() {
-		return $this->grade;
-	}
-
-	/**
-	 * Getter on the coefficient
-	 * @return int $coefficient
-	 */
-	public function getCoefficient() {
-		return $this->coefficient;
-	}
-
-	/**
-	 * Getter on the subject_id corresponding to the grade 
-	 * @return int $subject_id
-	 */
-	public function getSubjectId() {
-		return $this->subject_id;
-    }
-    
-    /**
-	 * Getter on the student_id corresponding to the grade 
-	 * @return int $subject_id
-	 */
-	public function getStudentId() {
-		return $this->student_id;
-	}
-
-
-	/*******************GETTERS COMPLEXES*******************/
-
+	
 	/**
 	 * Fetch all the Grade of the database
 	 * @return array<Grade> list of instance Grade
