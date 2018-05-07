@@ -13,6 +13,17 @@ class UserController extends Controller {
         return response()->json(Auth::user());
     }
 
+/*
+    Teste le rôle du user connecté
+        Retourne 0 si c'est un élève
+        Retourne 1 si c'est un admin
+*/
+    public function isAdmin() {
+        if(getAuthUser()->role_id == 1)
+            return 1;
+        return 0;
+    }
+
     public function create(Request $request) {
         $user = User::create($request->all());
         return response()->json($user);

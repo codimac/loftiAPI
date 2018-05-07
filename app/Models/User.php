@@ -9,8 +9,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject
-{
+class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject {
     use Authenticatable, Authorizable;
 
     protected $table = 'user';
@@ -38,13 +37,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'password',
     ];
 
-    public function getJWTIdentifier()
-    {
+    public function getJWTIdentifier() {
         return $this->getKey();
     }
 
-    public function getJWTCustomClaims()
-    {
+    public function getJWTCustomClaims() {
         return [
             'role_label' => $this->join('role', 'user.role_id', '=', 'role.role_id')
                 ->where('user_id', $this->user_id)

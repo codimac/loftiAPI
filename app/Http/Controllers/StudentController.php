@@ -8,15 +8,14 @@ use Illuminate\Http\Request;
  
 class StudentController extends Controller
 {
-    /*public function create(Request $request)
-    {
+    /*public function create(Request $request) {
+
         $student = Student::create($request->all());
  
         return response()->json($student);
     }
  
-    public function update(Request $request, $studentId)
-    {
+    public function update(Request $request, $studentId) {
         $student = Student::find($studentId);
         $student->make = $request->input('lastname');
         $student->make = $request->input('firstname');
@@ -28,19 +27,16 @@ class StudentController extends Controller
         return response()->json($student);
     }  
 
-    public function delete($studentId)
-    {
+    public function delete($studentId) {
         $student  = Student::find($studentId);
         $student->delete();
  
         return response()->json('Removed successfully.');
     }*/
 
-    public function findAll()
-    {
+    public function findAll() {
         $students = Student::all();
- 
+        
         return response()->json($students);
- 
     }
 }
