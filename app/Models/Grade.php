@@ -23,28 +23,16 @@ class Grade extends Model
 	 * @throws Exception if the $grade_id is unkown
 	 */
 	public static function createFromId($grade_id){
-		$grade = App\Subject::find($grade_id); 
+		$grade = App\Grade::find($grade_id); 
 		return $grade;
     }
 	
 	
-	/**
-	 * Fetch all the Grade of the database
-	 * @return array<Grade> list of instance Grade
-	 */
-	public static function getAll() {
-		// TO DO
-		$i=0;
-		$tab = array();
-		$pdo = MyPDO::getInstance()->prepare("SELECT * FROM Grade");
-		$pdo->execute();
-		$pdo->setFetchMode(PDO::FETCH_CLASS,"Grade");
-		while(($ligne = $pdo->fetch()) != false){
-			$tab[$i]=$ligne;
-			$i++;
-		}
-		return $tab;
-	}
+	
+	
+
+
+	
 
 
     /**
