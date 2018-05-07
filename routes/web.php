@@ -19,8 +19,8 @@ $router->group(['prefix' => 'auth'], function($router) {
     $router->post('/signin', 'AuthController@signIn');
 });
 
-$router->group(['prefix' => 'auth'], function($router) {
-    $router->post('/abs', 'AuthController@store');
+$router->group(['prefix' => 'abs'], function($router) {
+    $router->post('/create', 'AbsenceController@create');
 });
 
 
