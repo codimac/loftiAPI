@@ -23,4 +23,11 @@ class GradeController extends Controller
 		);
     }
 
+
+	public static function addGrade(Request $request){
+        Subject::insert(
+            ['name' => $request->input('name'), 'coefficient' => $request->input('coefficient'),'ue_id' => $request->input('ue_id')]
+		);
+    }
+
 }

@@ -42,3 +42,7 @@ $router->get('/test', function() {
 
 
 $router->get('/test2', 'GradeController@getAll');
+$router->get('/Subject/All', 'SubjectController@getAll');
+$router->post('/Subject/Add', 'SubjectController@createSubject');
+$router->get('Ue/All', 'UeController@getAll');
+$router->post('Ue/Add', 'UeController@createUe');
