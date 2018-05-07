@@ -11,6 +11,8 @@
 |
 */
 
+
+
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
@@ -37,3 +39,6 @@ $router->get('/test', function() {
         'message' => 'Ce hello world vient de l\'API'
     ]);
 });
+
+
+$router->get('/test2', 'GradeController@getAll');
