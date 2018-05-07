@@ -37,3 +37,7 @@ $router->get('/test', function() {
         'message' => 'Ce hello world vient de l\'API'
     ]);
 });
+
+$router->post('users/create', 'UserController@createUser');
+
+$router->put('users/update/{id}', 'UserController@updateUser');
