@@ -13,12 +13,12 @@ class UserController extends Controller {
         return response()->json(Auth::user());
     }
 
-    public function createUser(Request $request) {
+    public function create(Request $request) {
         $user = User::create($request->all());
         return response()->json($user);
     }
      
-    public function updateUser(Request $request, $id) {
+    public function update(Request $request, $id) {
         $user = User::find($id);
         $user->lastname = $request->input('lastname');
         $user->firstname = $request->input('firstname');
