@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Grade extends Model
 {
     protected $table = 'grade';
-    protected $primaryKey = 'grade_id';
+	protected $primaryKey = 'grade_id';
     public $timestamps = false;
 	
 
@@ -55,24 +55,7 @@ class Grade extends Model
 	}
 
 
-    /**
-	 * Fetch all the Grade for one student
-     * Fold by semester then UE and subject
-	 * @return array<Grade> list of instance grade
-	 */
-	public static function getStudentGradeFolded($student_id) {
-		$i=0;
-		$tab = array();
-		$pdo = MyPDO::getInstance()->prepare("SELECT G.grade, S.name FROM Grade as G INNER JOIN Subject as S ON G.subject_id = S.subject_id INNER JOIN UE as U ON S.UE_id = U.UE_id
-        WHERE G.student_id = :student_id ORDER BY U.semester, U.name");
-		$pdo->execute();
-		$pdo->setFetchMode(PDO::FETCH_CLASS,"Grade");
-		while(($ligne = $pdo->fetch()) != false){
-			$tab[$i]=$ligne;
-			$i++;
-		}
-		return $tab;
-    }
+    
     
     /* Actions upons table */
 
