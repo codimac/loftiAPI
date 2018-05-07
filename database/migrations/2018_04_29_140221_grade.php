@@ -18,6 +18,7 @@ class Grade extends Migration
             $table->integer('grade');
             $table->integer('coefficient');
             $table->integer('subject_id');
+            $table->foreign('subject_id')->references('subject_id')->on('subject');
             $table->integer('student_id');
         });
     }
