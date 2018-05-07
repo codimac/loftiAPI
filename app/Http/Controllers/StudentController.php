@@ -1,11 +1,11 @@
 <?php
- 
+
 namespace App\Http\Controllers;
- 
+
 use App\Models\Student;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
- 
+
 class StudentController extends Controller
 {
     /*public function create(Request $request) {
@@ -34,9 +34,13 @@ class StudentController extends Controller
         return response()->json('Removed successfully.');
     }*/
 
-    public function findAll() {
+    public function findAll(Request $request) {
+        // Retourne tous les elèves de la table, sans distinction de promo
+        // Reste à ajouter un paramètre $promo
+        // $promo = ->input('promo');
+
         $students = Student::all();
-        
+
         return response()->json($students);
     }
 }
