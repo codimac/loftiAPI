@@ -24,6 +24,8 @@ $router->group([
     'prefix' => 'users',
 ], function($router) {
     $router->get('/me', 'UserController@getAuthUser');
+	$router->post('/create', 'UserController@createUser');
+	$router->put('/update/{id}', 'UserController@updateUser');
 });
 
 $router->group(['middleware' => 'auth:api'], function ($router) {
@@ -37,7 +39,3 @@ $router->get('/test', function() {
         'message' => 'Ce hello world vient de l\'API'
     ]);
 });
-
-$router->post('users/create', 'UserController@createUser');
-
-$router->put('users/update/{id}', 'UserController@updateUser');
