@@ -26,6 +26,12 @@ $router->group([
     $router->get('/me', 'UserController@getAuthUser');
 });
 
+$router->group(['middleware' => 'auth:api'], function ($router) {
+    $router->get('/always/true', function () {
+        return response()->json(['ok' => 'ok']);
+    });
+});
+
 $router->get('/test', function() {
     return response()->json([
         'message' => 'Ce hello world vient de l\'API'
