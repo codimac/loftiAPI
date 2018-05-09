@@ -34,12 +34,22 @@ class StudentController extends Controller
         return response()->json('Removed successfully.');
     }*/
 
-    public function findAll(Request $request) {
+    public function getAllStudents(Request $request) {
         // Retourne tous les elèves de la table, sans distinction de promo
         // Reste à ajouter un paramètre $promo
         // $promo = ->input('promo');
 
         $students = Student::all();
+
+        return response()->json($students);
+    }
+
+    public function getStudentsByPromo(Request $request) {
+        // Retourne tous les elèves de la table, sans distinction de promo
+        // Reste à ajouter un paramètre $promo
+        // $promo = ->input('promo');
+
+        $students = DB::table('student')->where('promo', 2020)->get();
 
         return response()->json($students);
     }

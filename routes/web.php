@@ -32,7 +32,8 @@ $router->group([
     'middleware' => 'auth:api',
     'prefix' => 'students',
 ], function($router) {
-    $router->post('/all', 'StudentController@findAll');
+    $router->post('/all', 'StudentController@getAllStudents');
+    $router->post('/{promo_id}', 'StudentController@getStudentsByPromo');
 });
 
 
