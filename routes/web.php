@@ -33,6 +33,15 @@ $router->group([
 	$router->put('/update/{id}', 'UserController@updateUser');
 });
 
+$router->group([
+    'middleware' => 'auth:api',
+    'prefix' => 'students',
+], function($router) {
+    $router->post('/all', 'StudentController@getAllStudents');
+    $router->post('/{promo_id}', 'StudentController@getStudentsByPromo');
+});
+
+
 $router->group(['middleware' => 'auth:api'], function ($router) {
     $router->get('/always/true', function () {
         return response()->json(['ok' => 'ok']);
