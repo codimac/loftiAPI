@@ -11,7 +11,7 @@ class Subject extends Model
 	protected $primaryKey = 'subject_id';
     public $timestamps = false;
 
- 	protected $fillable = ['student_id', 'name', 'coefficient', 'ue_id'];
+ 	protected $fillable = ['name', 'coefficient', 'ue_id'];
 
 }
 ?>

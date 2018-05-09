@@ -19,8 +19,15 @@ $router->group(['prefix' => 'auth'], function($router) {
     $router->post('/signin', 'AuthController@signIn');
 });
 
+$router->group(['prefix' => 'subject'], function($router) {
+    $router->post('/ue_id', 'AuthController@getSubjectByUE');
+});
+
+
 $router->get('/test', function() {
     return response()->json([
         'message' => 'Ce hello world vient de l\'API'
     ]);
 });
+
+
