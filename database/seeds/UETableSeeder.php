@@ -10,8 +10,7 @@ class UETableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
-    {
+    public function run() {
         DB::table('ue')->insert([
             'semester' => 1,
             'ects' => 9,

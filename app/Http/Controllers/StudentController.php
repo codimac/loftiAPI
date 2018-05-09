@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
@@ -34,22 +35,14 @@ class StudentController extends Controller
         return response()->json('Removed successfully.');
     }*/
 
-    public function getAllStudents(Request $request) {
-        // Retourne tous les elèves de la table, sans distinction de promo
-        // Reste à ajouter un paramètre $promo
-        // $promo = ->input('promo');
-
+    public function getAllStudents() {
         $students = Student::all();
 
         return response()->json($students);
     }
 
-    public function getStudentsByPromo(Request $request) {
-        // Retourne tous les elèves de la table, sans distinction de promo
-        // Reste à ajouter un paramètre $promo
-        // $promo = ->input('promo');
-
-        $students = DB::table('student')->where('promo', 2020)->get();
+    public function getUeBySemester($year) {
+        $students = DB::table('student')->where('promo', $year)->get();
 
         return response()->json($students);
     }
