@@ -46,3 +46,12 @@ $router->get('/Subject/All', 'SubjectController@getAll');
 $router->post('/Subject/Add', 'SubjectController@createSubject');
 $router->get('Ue/All', 'UeController@getAll');
 $router->post('Ue/Add', 'UeController@createUe');
+
+
+/** Grades */
+
+$routes->get('/Grade/All', 'GradeController@getAll');
+$routes->get('/Grade/Add', 'GradeController@addGrade');
+$routes->get('/Grade/Update', 'GradeController@updateGrade');
+$routes->get('/Grade/Delete', 'GradeController@deleteGrade');
+
