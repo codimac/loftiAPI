@@ -19,8 +19,24 @@ $router->group(['prefix' => 'auth'], function($router) {
     $router->post('/signin', 'AuthController@signIn');
 });
 
+
 $router->group(['prefix' => 'subject'], function($router) {
-    $router->post('/ue_id', 'AuthController@getSubjectByUE');
+    $router->post('/ue_id', 'SubjectController@getSubjectByUE');
+});
+
+$router->group([
+    'middleware' => 'auth:api',
+    'prefix' => 'users',
+], function($router) {
+    $router->get('/me', 'UserController@getAuthUser');
+	$router->post('/create', 'UserController@createUser');
+	$router->put('/update/{id}', 'UserController@updateUser');
+});
+
+$router->group(['middleware' => 'auth:api'], function ($router) {
+    $router->get('/always/true', function () {
+        return response()->json(['ok' => 'ok']);
+    });
 });
 
 

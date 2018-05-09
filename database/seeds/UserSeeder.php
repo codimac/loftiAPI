@@ -14,6 +14,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         $faker = Faker\Factory::create();
+        
         DB::table('user')->insert([
             'lastname' => 'Donard',
             'firstname' => 'Sylvie',

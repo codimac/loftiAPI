@@ -17,6 +17,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $primaryKey = 'user_id';
     public $timestamps = false;
 
+    protected $fillable = [
+        'lastname',
+        'firstname',
+        'username',
+        'password',
+        'role_id'
+    ];
+
     protected $guarded = [
         'user_id'
     ];
