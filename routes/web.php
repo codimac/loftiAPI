@@ -25,7 +25,7 @@ $router->group([
 	'prefix' => 'subjects',
 ], function($router) {
     $router->get('/ues/{ue_id}', 'SubjectController@getSubjectsByUE');
-    $router->get('/semesters/{semestre}', 'SubjectController@getSubjectsBySemestrer');
+    $router->get('/semesters/{semestrer}', 'SubjectController@getSubjectsBySemestrer');
 });
 
 $router->group([

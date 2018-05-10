@@ -42,15 +42,28 @@ class SubjectController extends Controller {
 		$ues = UE::where('semester', '=', $semester)->get(['ue_id']);
 		//return response()->json($ues);
 
+		/*
+		var_dump(json_decode($ues, true));
+		echo '<br> random tab : ';
+		$random = array_rand(json_decode($ues, true));
+		echo $random.'<br>';
+		var_dump(json_decode($ues, true)[$random]["ue_id"]);
+		*/
+
+
 		$subjects = Subject::whereIn('ue_id', $ues)->get();
 
 		/*foreach($subjects as $subject){
 		  echo $subject->name.'<br>'; 
 		}*/
 
-
 		return response()->json($subjects);
 
 	}
+
+
+
+
+
     
 }
