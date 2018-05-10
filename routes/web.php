@@ -55,6 +55,7 @@ $routes->get('/Grade/All', 'GradeController@getAll');
 $routes->get('/Grade/All', 'GradeController@getAll');
 
 $routes->post('/Grade/Show/{subject_id}', 'GradeController@getGradeStudentSubject');
+$routes->post('/Grade/Show/{Ue_id}','GradeController@getGradeStudentSubjectUe');
 $routes->get('/Grade/Add', 'GradeController@addGrade');
 $routes->get('/Grade/Update', 'GradeController@updateGrade');
 $routes->get('/Grade/Delete', 'GradeController@deleteGrade');
