@@ -26,6 +26,7 @@ class GradeController extends Controller
    public static function getGradesStudent(Request $request) {
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->join('user', 'user.user_id', '=', 'grade.student_id')
+		->where('grade.student_id',$request->input('student_id'))
 		->select('grade.grade', 'grade.coefficient', 'subject.name')
 		->group('subject.name')
 		->get();
@@ -41,17 +42,29 @@ class GradeController extends Controller
 
 	public static function getGradesStudentSubject(Request $request) {
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
-		->join('user', 'user.user_id', '=', 'grade.student_id')
-		->where('subject.subject_id', $request->input('subject_id'))
-		->select('grade.grade', 'grade.coefficient')
+		->where([
+			'subject.subject_id' => $request->input('subject_id'),
+			'grade.student_id' => $request->input('student_id')
+		])->select('grade.grade', 'grade.coefficient')
 		->get();
 		return $grades;
 	}
 
 	/** 
 	 * Fetch all the grade for one student in a given UE
-	 * Input : request (student_id, subject_id)
+	 * Input : request (subject_id)
+	 * Sorted by UE
+	 * @return $grades with column (grades.grade, grade.coefficient, subject.name, Ue.name)
 	 */
+
+	public static function getGradesStudentUe(Request $request) {
+		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
+		->join('Ue', 'Ue.ue_id', '=', 'subject.ue_id')
+		->where('subject.subject_id', $request->input('subject_id'))
+		->select('grade.grade', 'grade.coefficient')
+		->get();
+		return $grades;
+	}
 
 	/** 
 	 * Fetch all the grade for one student in a given semester
