@@ -41,16 +41,20 @@ $router->get('/test', function() {
 });
 
 
-$router->get('/test2', 'GradeController@getAll');
 $router->get('/Subject/All', 'SubjectController@getAll');
 $router->post('/Subject/Add', 'SubjectController@createSubject');
 $router->get('Ue/All', 'UeController@getAll');
 $router->post('Ue/Add', 'UeController@createUe');
 
 
-/** Grades */
 
+/** Grades */
 $routes->get('/Grade/All', 'GradeController@getAll');
+
+/** Supposedly prefixed with the name of the student or user */
+$routes->get('/Grade/All', 'GradeController@getAll');
+
+$routes->post('/Grade/Show/{subject_id}', 'GradeController@getGradeStudentSubject');
 $routes->get('/Grade/Add', 'GradeController@addGrade');
 $routes->get('/Grade/Update', 'GradeController@updateGrade');
 $routes->get('/Grade/Delete', 'GradeController@deleteGrade');
