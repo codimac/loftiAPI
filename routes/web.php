@@ -20,8 +20,12 @@ $router->group(['prefix' => 'auth'], function($router) {
 });
 
 
-$router->group(['prefix' => 'subject'], function($router) {
-    $router->post('/ue_id', 'SubjectController@getSubjectByUE');
+$router->group([
+	'middleware' => 'auth:api',
+	'prefix' => 'subjects',
+], function($router) {
+    $router->get('/ues/{ue_id}', 'SubjectController@getSubjectsByUE');
+    //$router->post('/subjects/all', 'StudentController@getAllSubjects');
 });
 
 $router->group([

@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Subject;
 use App\Models\UE;
 
 class SubjectController extends Controller {
 
-	public function getSubjectByUE($ue_id){
+	public function getSubjectsByUE($ue_id){
+
  
     	$subject = Subject::where('ue_id', '=', $ue_id)->get();
  
