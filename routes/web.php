@@ -37,10 +37,17 @@ $router->group([
     'middleware' => 'auth:api',
     'prefix' => 'students',
 ], function($router) {
-    $router->post('/all', 'StudentController@getAllStudents');
-    $router->post('/{promo_id}', 'StudentController@getStudentsByPromo');
+    $router->post('/promo/all', 'StudentController@getAllStudents');
+    $router->get('/promo/{year}', 'StudentController@getStudentsByPromo');
 });
 
+$router->group([
+    'middleware' => 'auth:api',
+    'prefix' => 'ue',
+], function($router) {
+    $router->post('/semesters/all', 'UeController@getAllUe');
+    $router->get('/semesters/{semester_id}', 'Ue@getUeBySemester');
+});
 
 $router->group(['middleware' => 'auth:api'], function ($router) {
     $router->get('/always/true', function () {
