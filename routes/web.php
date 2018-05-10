@@ -53,10 +53,11 @@ $routes->get('/Grade/All', 'GradeController@getAll');
 
 /** Supposedly prefixed with the name of the student or user */
 $routes->get('/Grade/All', 'GradeController@getAll');
-
 $routes->post('/Grade/Show/{subject_id}', 'GradeController@getGradeStudentSubject');
-$routes->post('/Grade/Show/{Ue_id}','GradeController@getGradeStudentSubjectUe');
+$routes->post('/Grade/Show/{ue_id}','GradeController@getGradeStudentUe');
+$routes->post('/Grade/Show/{semester}','GradeController@getGradeStudentSemester');
+
 $routes->get('/Grade/Add', 'GradeController@addGrade');
-$routes->get('/Grade/Update', 'GradeController@updateGrade');
-$routes->get('/Grade/Delete', 'GradeController@deleteGrade');
+$routes->get('/Grade/Update/{grade_id}', 'GradeController@updateGrade');
+$routes->get('/Grade/Delete/{grade_id}', 'GradeController@deleteGrade');
 
