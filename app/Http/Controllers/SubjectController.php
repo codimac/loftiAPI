@@ -6,14 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Subject;
 use App\Models\UE;
+use Illuminate\Support\Facades\DB;
 
 class SubjectController extends Controller {
 
 	public function getSubjectsByUE($ue_id){
 
 
-    	$subject = Subject::where('ue_id', '=', $ue_id)->get();
-    	return response()->json($subject);
+    	$subjects = Subject::where('ue_id', '=', $ue_id)->get();
+    	return response()->json($subjects);
 
     	/*foreach($subjects as $subject){
 		  echo $subject->name; 
@@ -34,6 +35,22 @@ class SubjectController extends Controller {
     		return response()->json($subject);
     	}*/
  
+	}
+
+	public function getSubjectsBySemestrer($semester){
+
+		$ues = UE::where('semester', '=', $semester)->get(['ue_id']);
+		//return response()->json($ues);
+
+		$subjects = Subject::whereIn('ue_id', $ues)->get();
+
+		/*foreach($subjects as $subject){
+		  echo $subject->name.'<br>'; 
+		}*/
+
+
+		return response()->json($subjects);
+
 	}
     
 }
