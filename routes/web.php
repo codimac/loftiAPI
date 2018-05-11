@@ -57,13 +57,13 @@ $router->post('/Grade/Show/Promo/Semester', 'GradeController@getGradesPromoSemes
 
 
 
-// /** Supposedly prefixed with the name of the student or user */
-// $router->get('/Grade/All', 'GradeController@getGradesStudent');
-// $router->post('/Grade/Show/{subject_id}', 'GradeController@getGradesStudentSubject');
-// $router->post('/Grade/Show/{ue_id}','GradeController@getGradesStudentUe');
-// $router->post('/Grade/Show/{semester}','GradeController@getGradesStudentSemester');
+/** Supposedly prefixed with the name of the student or user */
+$router->get('/Grade/All', 'GradeController@getGradesStudent');
+$router->post('/Grade/Show/{subject_id}', 'GradeController@getGradesStudentSubject');
+$router->post('/Grade/Show/{ue_id}','GradeController@getGradesStudentUe');
+$router->post('/Grade/Show/{semester}','GradeController@getGradesStudentSemester');
 
-// $router->get('/Grade/Add', 'GradeController@addGrade');
-// $router->get('/Grade/Update/{grade_id}', 'GradeController@updateGrade');
-// $router->get('/Grade/Delete/{grade_id}', 'GradeController@deleteGrade');
+$router->get('/Grade/Add', 'GradeController@addGrade');
+$router->get('/Grade/Update/{grade_id}', 'GradeController@updateGrade');
+$router->get('/Grade/Delete/{grade_id}', 'GradeController@deleteGrade');
 

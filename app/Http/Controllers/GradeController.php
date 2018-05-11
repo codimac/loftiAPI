@@ -17,6 +17,10 @@ class GradeController extends Controller
 		return $grades;
 	}
 
+
+	/** GRADES FOR A STUDENT */
+
+
 	/**
 	 * Fetch all the Grades for one student
 	 * Input : request (student_id) or student name ?
@@ -33,7 +37,6 @@ class GradeController extends Controller
 		->get();
 		return $grades;
 	}	
-
 
 	/** 
 	 * Fetch all the grade for one student in a given subject
@@ -90,6 +93,10 @@ class GradeController extends Controller
 	}
 
 
+	
+	/** GRADES FOR A PROMO */
+
+
 	/** 
 	 * Fetch all the grade for a promo in a given subject
 	 * Input : request (promo, subject)
@@ -106,7 +113,6 @@ class GradeController extends Controller
 		->get();
 		return $grades;
 	}
-
 
 
 	/** 
@@ -150,6 +156,11 @@ class GradeController extends Controller
 	}
 
 
+
+
+	/** ADD DELETE UPDATE GRADE FOR ONE STUDENT */
+
+
 	/**
 	 * Add a new grade to a student
 	 * input : request (grade, coefficient, subject_id, user_id)
@@ -160,7 +171,6 @@ class GradeController extends Controller
             ['grade' => $request->input('grade'), 'coefficient' => $request->input('coefficient'),'subject_id' => $request->input('subject_id'), 'student_id' => $request->input('student_id')]
 		);
 	}
-	
 
 	/**
 	 * Update a grade to a student (same subject)
