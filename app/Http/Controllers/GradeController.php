@@ -88,7 +88,26 @@ class GradeController extends Controller
 		->get();
 		return $grades;
 	}
-	
+
+
+	/** 
+	 * Fetch all the grade for a promo in a given subject
+	 * Input : request (promo, subject)
+	 * @return $grades with column (grade.grade, grade.coefficient)
+	 */
+
+	public static function getGradesPromoSubject(Request $request) {
+		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
+		->join('student', 'student.student_id', '=', 'grade.student_id')
+		->where([
+			'subject.subject_id' => $request->input('subject_id'),
+			'student.promo' => $request->input('promo')
+		])->select('grade.grade', 'grade.coefficient')
+		->get();
+		return $grades;
+	}
+
+
 
 	/** 
 	 * Fetch all the grade for a promo in a given ue
