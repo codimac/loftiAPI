@@ -20,6 +20,7 @@ class Grade extends Migration
             $table->integer('subject_id');
             $table->foreign('subject_id')->references('subject_id')->on('subject');
             $table->integer('student_id');
+            $table->foreign('student_id')->references('student_id')->on('student');
         });
     }
 
