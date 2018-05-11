@@ -26,7 +26,7 @@ class GradeController extends Controller
     
    public static function getGradesStudent(Request $request) {
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
-		->join('user', 'user.user_id', '=', 'grade.student_id')
+		->join('student', 'student.student_id', '=', 'grade.student_id')
 		->where('grade.student_id',$request->input('student_id'))
 		->select('grade.grade', 'grade.coefficient', 'subject.name')
 		->orderBy('subject.name')
@@ -89,6 +89,27 @@ class GradeController extends Controller
 		return $grades;
 	}
 
+	/** 
+	 * Fetch all the grade for a promo in a given semester
+	 * Input : request (promo, semester)
+	 * Sorted by ue.name
+	 * @return $grades with column (ue.name, subject.name, subject.coefficient,grade.grade, grade.coefficient)
+	 */
+
+	public static function getGradesPromoSemester(Request $request) {
+		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
+		->join('ue', 'ue.ue_id', '=', 'subject.ue_id')
+		->join('student', 'student.student_id', '=', 'grade.student_id')
+		->where([
+			'ue.semester' => $request->input('semester'),
+			'student.promo' => $request->input('promo')
+		])->select('ue.name' ,'subject.name','subject.coefficient', 'grade.grade', 'grade.coefficient')
+		->orderBy('ue.name')
+		->get();
+		return $grades;
+	}
+
+
 	/**
 	 * Add a new grade to a student
 	 * input : request (grade, coefficient, subject_id, user_id)
@@ -98,7 +119,8 @@ class GradeController extends Controller
         Grade::insert(
             ['grade' => $request->input('grade'), 'coefficient' => $request->input('coefficient'),'subject_id' => $request->input('subject_id'), 'student_id' => $request->input('student_id')]
 		);
-    }
+	}
+	
 
 	/**
 	 * Update a grade to a student (same subject)

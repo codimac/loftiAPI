@@ -49,15 +49,18 @@ $router->post('Ue/Add', 'UeController@createUe');
 
 
 /** Grades */
-$routes->get('/Grade/All', 'GradeController@getAll');
+$router->get('/Grade/All', 'GradeController@getAll');
 
-/** Supposedly prefixed with the name of the student or user */
-$routes->get('/Grade/All', 'GradeController@getAll');
-$routes->post('/Grade/Show/{subject_id}', 'GradeController@getGradeStudentSubject');
-$routes->post('/Grade/Show/{ue_id}','GradeController@getGradeStudentUe');
-$routes->post('/Grade/Show/{semester}','GradeController@getGradeStudentSemester');
+$router->post('/Grade/Show/promo/semester', 'GradeController@getGradesPromoSemester');
 
-$routes->get('/Grade/Add', 'GradeController@addGrade');
-$routes->get('/Grade/Update/{grade_id}', 'GradeController@updateGrade');
-$routes->get('/Grade/Delete/{grade_id}', 'GradeController@deleteGrade');
+
+// /** Supposedly prefixed with the name of the student or user */
+// $router->get('/Grade/All', 'GradeController@getGradesStudent');
+// $router->post('/Grade/Show/{subject_id}', 'GradeController@getGradesStudentSubject');
+// $router->post('/Grade/Show/{ue_id}','GradeController@getGradesStudentUe');
+// $router->post('/Grade/Show/{semester}','GradeController@getGradesStudentSemester');
+
+// $router->get('/Grade/Add', 'GradeController@addGrade');
+// $router->get('/Grade/Update/{grade_id}', 'GradeController@updateGrade');
+// $router->get('/Grade/Delete/{grade_id}', 'GradeController@deleteGrade');
 
