@@ -88,6 +88,27 @@ class GradeController extends Controller
 		->get();
 		return $grades;
 	}
+	
+
+	/** 
+	 * Fetch all the grade for a promo in a given ue
+	 * Input : request (promo, ue)
+	 * Sorted by subject.name
+	 * @return $grades with column (subject.name, subject.coefficient, grade.grade, grade.coefficient)
+	 */
+
+	public static function getGradesPromoUe(Request $request) {
+		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
+		->join('ue', 'ue.ue_id', '=', 'subject.ue_id')
+		->join('student', 'student.student_id', '=', 'grade.student_id')
+		->where([
+			'ue.ue_id' => $request->input('ue_id'),
+			'student.promo' => $request->input('promo')
+		])->select('subject.name','subject.coefficient', 'grade.grade', 'grade.coefficient')
+		->orderBy('subject.name')
+		->get();
+		return $grades;
+	}
 
 	/** 
 	 * Fetch all the grade for a promo in a given semester
