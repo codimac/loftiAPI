@@ -51,8 +51,10 @@ $router->post('Ue/Add', 'UeController@createUe');
 /** Grades */
 $router->get('/Grade/All', 'GradeController@getAll');
 
+$router->post('/Grade/Show/Promo/Subject', 'GradeController@getGradesPromoSubject');
+$router->post('/Grade/Show/Promo/Ue', 'GradeController@getGradesPromoUe');
 $router->post('/Grade/Show/Promo/Semester', 'GradeController@getGradesPromoSemester');
-$router->post('/Grade/Show/Promo/Ue', 'GradeController@getGradesPromoSemester');
+
 
 
 // /** Supposedly prefixed with the name of the student or user */
