@@ -13,8 +13,12 @@ class SubjectController extends Controller {
 	public function getSubjectsByUE($ue_id){
 
 
+		if(!is_numeric($ue_id)){
+			return response()->json(['error' => 'The supplied request data is not in a format acceptable for processing by this resource. IT MUST BE AN INTEGER'], 415);
+		}
+
     	$subjects = Subject::where('ue_id', '=', $ue_id)->get();
-    	return response()->json($subjects);
+    	//return response()->json($subjects);
 
     	/*foreach($subjects as $subject){
 		  echo $subject->name; 
@@ -25,15 +29,15 @@ class SubjectController extends Controller {
 		   echo $v['name'].'<br>';
 		}*/
     	
-
-    	/*$subjectArray = (array)$subject;
+		// Si l'UE n'hésiste pas 
+    	$subjectArray = (array)$subjects;
 		$subjectArray = array_filter($subjectArray);
  
     	if(empty($subjectArray)){
     		return response()->json(['error' => 'Cant find that UE.'], 400);
     	}else{
-    		return response()->json($subject);
-    	}*/
+    		return response()->json($subjects);
+    	}
  
 	}
 
