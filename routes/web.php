@@ -41,6 +41,6 @@ $router->group([
     'middleware' => 'auth:api',
     'prefix' => 'ues',
 ], function($router) {
-    $router->get('/', 'UeController@getAllUe');
-    $router->get('/semesters/{semester}', 'UeController@getUeBySemester');
+    $router->get('/', 'UeController@getAllUes');
+    $router->get('/semesters/{semester}', 'UeController@getUesBySemester');
 });

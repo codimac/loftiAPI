@@ -15,8 +15,7 @@ class PromoSeeder extends Seeder
 
         for($i=0; $i<3; $i++) {
             DB::table('promo')->insert([
-                'promo_id' => 2018 + $i,
-                'year' => $i,
+                'year' => 2018 + $i,
             ]);
         }
     }

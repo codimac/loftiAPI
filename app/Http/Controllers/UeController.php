@@ -8,22 +8,22 @@ use Illuminate\Support\Facades\DB;
 
 class UeController extends Controller
 {
-    public function getAllUe() {
-        $ue = Ue::all();
+    public function getAllUes() {
+        $ues = Ue::all();
 
-        return response()->json($ue);
+        return response()->json($ues);
     }
 
-    public function getUeBySemester($semester) {
+    public function getUesBySemester($semester) {
         if(is_numeric($semester)) {
-            $ue = DB::table('ue')->where('semester', $semester)->get();
+            $ues = DB::table('ue')->where('semester', $semester)->get();
 
-            $ueArray = (array)$ue;
-                $ueArray = array_filter($ueArray);
-                if(empty($ueArray))
+            $uesArray = (array)$ues;
+                $uesArray = array_filter($uesArray);
+                if(empty($uesArray))
                     return response()->json(['error' => 'Can\'t find that UE.'], 400);
 
-            return response()->json($ue);
+            return response()->json($ues);
         }
 
         else
