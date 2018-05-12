@@ -26,7 +26,7 @@ $router->group([
 ], function($router) {
     $router->get('/ues/{ue_id}', 'SubjectController@getSubjectsByUE');
     $router->get('/semesters/{semestrer}', 'SubjectController@getSubjectsBySemestrer');
-    $router->get('/promos/{promo}', 'SubjectController@getSemestersByPromo');
+    $router->get('/promos/{promo}', 'SubjectController@getSubjectsByPromo');
 });
 
 $router->group([

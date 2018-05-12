@@ -77,8 +77,48 @@ class SubjectController extends Controller {
 
 	}
 
-	
+	public function getSubjectsByPromo($promo){
 
+		// Si $promo n'est pas un INT 
+		if(!is_numeric($promo)){
+			return response()->json(['error' => 'The supplied request data is not in a format acceptable for processing by this resource. IT MUST BE AN INTEGER'], 415);
+		}
+
+		$date = getdate();
+
+		$year = $date['year'];
+		$mon = $date['mon'];
+
+		if($mon<8 && $year<=$promo-3){ // Si la promo n'est pas encore à l'imac 
+			//echo "Promo pas encore présente";
+		}else if(($mon>8 && $year<=$promo) || ($year>$promo)){ // Si la promo n'est plus présente à l'imac 
+			//echo "Promo plus présente";
+		}else{ // La promo est présente à l'imac
+			//echo "Promo présente </br>";
+
+			if(($mon<8 && $year==$promo) || ($mon>8 && $year==$promo-1)){
+				//echo "IMAC 3</br>";
+				$ues = UE::whereIn('semester', array(5,6))->get();
+			}else if(($mon<8 && $year==$promo-1) || ($mon>8 && $year==$promo-2)){
+				//echo "IMAC 2</br>";
+				$ues = UE::whereIn('semester', array(3,4))->get();
+			}else if(($mon<8 && $year==$promo-2) || ($mon>8 && $year==$promo-3)){
+				//echo "IMAC 1</br>";
+				$ues = UE::whereIn('semester', array(1,2))->get();				
+			}
+
+			$subjects = Subject::whereIn('ue_id', $ues)->get();
+			$subjectArray = (array)$subjects;
+			$subjectArray = array_filter($subjectArray);
+			if(empty($subjectArray)){
+	    		return response()->json(['error' => 'Cant find subject for this year.'], 400);
+	    	}else{
+	    		return response()->json($subjects);
+	    	}
+
+		}
+		
+	}
 
     
 }
