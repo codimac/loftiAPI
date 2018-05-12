@@ -38,7 +38,7 @@ class PromoController extends Controller
         return response()->json($students);
     }
 
-    public function getSemestersByPromo($promo) {
+    public static function getSemestersByPromo($promo) {
         // Si $promo n'est pas un INT
         if(!is_numeric($promo)) {
             return response()->json(['error' => 'The supplied request data is not in a format acceptable for processing by this resource. It must be an integer.'], 415);
@@ -51,11 +51,11 @@ class PromoController extends Controller
 
         if($mon<8 && $year<=$promo-3)
             // Si la promo n'est pas encore à l'IMAC 
-            return response()->json(['error' => 'Can\'t find semesters for this promo. This promo does not exist anymore.'], 400);
+            return response()->json(['error' => 'Can\'t find semesters for this promo. This promo does not exist yet.'], 400);
 
         else if(($mon>8 && $year<=$promo) || ($year>$promo))
             // Si la promo n'est plus présente à l'IMAC 
-            return response()->json(['error' => 'Can\'t find semesters for this promo. This promo does not exist yet.'], 400);
+            return response()->json(['error' => 'Can\'t find semesters for this promo. This promo does not exist anymore.'], 400);
 
         else {
             // La promo est présente à l'IMAC

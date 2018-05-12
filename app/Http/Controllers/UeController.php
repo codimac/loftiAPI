@@ -14,11 +14,11 @@ class UeController extends Controller
         return response()->json($ues);
     }
 
-    public function getUesBySemester($semester) {
-        if(!is_numeric($semester))
+    public function getUesBySemester($semesterId) {
+        if(!is_numeric($semesterId))
             return response()->json(['error' => 'Please enter a valid semester. It must be an integer.'], 400);
 
-        $ues = DB::table('ue')->where('semester', $semester)->get();
+        $ues = DB::table('ue')->where('semester', $semesterId)->get();
 
         $uesArray = (array)$ues;
             $uesArray = array_filter($uesArray);

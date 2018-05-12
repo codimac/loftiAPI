@@ -42,15 +42,15 @@ $router->group([
     'prefix' => 'ues',
 ], function($router) {
     $router->get('/semesters/', 'UeController@getAllUes');
-    $router->get('/semesters/{semester}', 'UeController@getUesBySemester');
+    $router->get('/semesters/{semesterId}', 'UeController@getUesBySemester');
 });
 
 $router->group([
     'middleware' => 'auth:api',
     'prefix' => 'subjects',
 ], function($router) {
-    $router->get('/ues/{ue_id}', 'SubjectController@getSubjectsByUE');
-    $router->get('/semesters/{semestrer}', 'SubjectController@getSubjectsBySemester');
+    $router->get('/ues/{ueId}', 'SubjectController@getSubjectsByUe');
+    $router->get('/semesters/{semestrerId}', 'SubjectController@getSubjectsBySemester');
     //Cette fonction ne marche pas
-    $router->get('/promos/{promo}', 'SubjectController@getSubjectsByPromo');
+    $router->get('/promos/{year}', 'SubjectController@getSubjectsByPromo');
 });

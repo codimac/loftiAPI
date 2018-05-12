@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\DB;
 
 class SubjectController extends Controller
 {
-	public function getSubjectsByUE($ue_id) {
-		// Si $ue_id n'est pas un INT 
-		if(!is_numeric($ue_id)) {
+	public function getSubjectsByUe($ueId) {
+		// Si $ueId n'est pas un INT 
+		if(!is_numeric($ueId)) {
 			return response()->json(['error' => 'The supplied request data is not in a format acceptable for processing by this resource. It must be an integer.'], 415);
 		}
 
-    	$subjects = Subject::where('ue_id', '=', $ue_id)->get();
+    	$subjects = Subject::where('ue_id', $ueId)->get();
 
     	/*foreach($subjects as $subject) {
 		  echo $subject->name; 
@@ -31,19 +31,19 @@ class SubjectController extends Controller
     	$subjectArray = (array)$subjects;
 		$subjectArray = array_filter($subjectArray);
     	if(empty($subjectArray)) {
-    		return response()->json(['error' => 'Cant find that UE.'], 400);
+    		return response()->json(['error' => 'Can\'t find that UE.'], 400);
     	} else {
     		return response()->json($subjects);
     	}
 	}
 
-	public function getSubjectsBySemester($semester) {
-		// Si $semester n'est pas un INT 
-		if(!is_numeric($semester)) {
+	public function getSubjectsBySemester($semesterId) {
+		// Si $semesterId n'est pas un INT
+		if(!is_numeric($semesterId)) {
 			return response()->json(['error' => 'The supplied request data is not in a format acceptable for processing by this resource. It must be an integer.'], 415);
 		}
-
-		$ues = UE::where('semester', '=', $semester)->get(['ue_id']);
+		
+		$ues = UE::where('semester', $semesterId)->get(['ue_id']);
 
 		/*
 		var_dump(json_decode($ues, true));
@@ -54,69 +54,60 @@ class SubjectController extends Controller
 		*/
 
 		$subjects = Subject::whereIn('ue_id', $ues)->get();
+		//$subjects = $this->getSubjectsByUe($ues);
 
 		/*foreach($subjects as $subject) {
 		  echo $subject->name.'<br>'; 
 		}*/
 
-		//S'il n'y a pas de matières pour cette UE
-		$subjectArray = (array)$subjects;
-		$subjectArray = array_filter($subjectArray);
-		if(empty($subjectArray)) {
-    		return response()->json(['error' => 'Cant find subject for this semester.'], 400);
+		// Si le tableau est vide (aucune matière trouvée)
+		$subjectsArray = (array)$subjects;
+		$subjectsArray = array_filter($subjectsArray);
+		if(empty($subjectsArray)) {
+    		return response()->json(['error' => 'Can\'t find subject for this semester.'], 400);
     	} else {
     		return response()->json($subjects);
     	}
 	}
 
-	//
-	//
-	//Cette fonction ne marche pas
-	//
-	//
-	public function getSubjectsByPromo($promo) {
-		// Si $promo n'est pas un INT 
-		if(!is_numeric($promo)) {
+	public function getSubjectsByPromo($year) {
+    	// Cette fonction marchait correctement. Je ne sais pas ce que j'ai fait mais elle renvoit ça maintenant, quand je saisis un entier :
+  		// {
+		//     "headers": {},
+		//     "original": {
+		//         "error": "The supplied request data is not in a format acceptable for processing by this resource. It must be an integer."
+		//     },
+		//     "exception": null
+		// }
+		// Habiuellement, cette erreur ressemble à ça :
+		// {
+		//     "error": "The supplied request data is not in a format acceptable for processing by this resource. It must be an integer."
+		// }
+		// En fait jobitens cette erreur si je fais appel à une des fonctions ecrites plus hautes... Mais pourquoi ?
+		
+
+		// Si $year n'est pas un INT 
+		if(!is_numeric($year)) {
 			return response()->json(['error' => 'The supplied request data is not in a format acceptable for processing by this resource. It must be an integer.'], 415);
 		}
+		
+		// Je n'arrive pas à recuperer le "sous-tabeau" semesters qui vient de la fonction getSemestersByPromo($year)
+		// et qui contient les deux semestres correspondant à la promo
 
-		$date = getdate();
+		$semesters = PromoController::getSemestersByPromo($year);
+		$semestersArray = (array)json_decode($semesters, true); ;
+		$semestersArray = array_filter($semestersArray);
+		var_dump($semestersArray);
 
-		$year = $date['year'];
-		$mon = $date['mon'];
-
-		if($mon<8 && $year<=$promo-3) { // Si la promo n'est pas encore à l'imac 
-			//echo "Promo pas encore présente";
-			return response()->json(['error' => 'Cant find subject for this promotion. PROMO TOO YOUNG'], 400);
-		} else if(($mon>8 && $year<=$promo) || ($year>$promo)) { // Si la promo n'est plus présente à l'imac 
-			//echo "Promo plus présente";
-			return response()->json(['error' => 'Cant find subject for this promotion. PROMO TOO OLD'], 400);
-		} else { // La promo est présente à l'imac
-			//echo "Promo présente </br>";
-
-			if(($mon<8 && $year==$promo) || ($mon>8 && $year==$promo-1)) {
-				//echo "IMAC 3</br>";
-				$ues = UE::whereIn('semester', array(5,6))->get();
-			}else if(($mon<8 && $year==$promo-1) || ($mon>8 && $year==$promo-2)) {
-				//echo "IMAC 2</br>";
-				$ues = UE::whereIn('semester', array(3,4))->get();
-			}else if(($mon<8 && $year==$promo-2) || ($mon>8 && $year==$promo-3)) {
-				//echo "IMAC 1</br>";
-				$ues = UE::whereIn('semester', array(1,2))->get();
-			}
-
-			//APPELER LA FONCTION GetSemestersByPromo($promo)
-			//$ues = UE::whereIn('semester', $semesters[semesters])->get();
-
-			$subjects = Subject::whereIn('ue_id', $ues)->get();
-			$subjectArray = (array)$subjects;
-			$subjectArray = array_filter($subjectArray);
-
-			if(empty($subjectArray)) {
-	    		return response()->json(['error' => 'Cant find subject for this promotion.'], 400);
-	    	} else {
-	    		return response()->json($subjects);
-	    	}
-		}	
+		$subjects = $this->getSubjectsBySemester($semesters);
+		
+		// Si le tableau est vide (aucune matière trouvée)
+		$subjectArray = (array)$subjects;
+		$subjectArray = array_filter($subjectArray);
+		if(empty($subjectArray)) {
+    		return response()->json(['error' => 'Can\'t find subject for this promotion.'], 400);
+    	} else {
+    		return response()->json($subjects);
+    	}
 	}
 }
