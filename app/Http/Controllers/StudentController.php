@@ -41,13 +41,20 @@ class StudentController extends Controller
         return response()->json($students);
     }
 
+    // A DEPLACER DANS LE CONTROLLER PROMO
     public function getStudentsByPromo($year) {
-        $students = DB::table('student')->where('promo', $year)->get();
+        if(is_numeric($year)) {
+            $students = DB::table('student')->where('promo', $year)->get();
 
-        if($students == 0) {
-            return response()->json(['error' => 'Cant find that promotion.'], 400);
+            $studentArray = (array)$students;
+                $studentArray = array_filter($studentArray);
+                if(empty($studentArray))
+                    return response()->json(['error' => 'Can\'t find that promotion.'], 400);
+
+            return response()->json($students);
         }
 
-        return response()->json($students);
+        else
+            return response()->json(['error' => 'Please enter a valid promotion.'], 415);
     }
 }
