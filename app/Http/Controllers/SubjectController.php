@@ -12,7 +12,7 @@ class SubjectController extends Controller {
 
 	public function getSubjectsByUE($ue_id){
 
-
+		// Si $ue_id n'est pas un INT 
 		if(!is_numeric($ue_id)){
 			return response()->json(['error' => 'The supplied request data is not in a format acceptable for processing by this resource. IT MUST BE AN INTEGER'], 415);
 		}
@@ -31,7 +31,6 @@ class SubjectController extends Controller {
 		// Si l'UE n'hésiste pas 
     	$subjectArray = (array)$subjects;
 		$subjectArray = array_filter($subjectArray);
- 
     	if(empty($subjectArray)){
     		return response()->json(['error' => 'Cant find that UE.'], 400);
     	}else{
@@ -42,8 +41,15 @@ class SubjectController extends Controller {
 
 	public function getSubjectsBySemestrer($semester){
 
+
+		// Si $semester n'est pas un INT 
+		if(!is_numeric($semester)){
+			return response()->json(['error' => 'The supplied request data is not in a format acceptable for processing by this resource. IT MUST BE AN INTEGER'], 415);
+		}
+
+
 		$ues = UE::where('semester', '=', $semester)->get(['ue_id']);
-		//return response()->json($ues);
+
 
 		/*
 		var_dump(json_decode($ues, true));
@@ -60,7 +66,16 @@ class SubjectController extends Controller {
 		  echo $subject->name.'<br>'; 
 		}*/
 
-		return response()->json($subjects);
+
+		//S'il n'y a pas de matières pour cet UE 
+		$subjectArray = (array)$subjects;
+		$subjectArray = array_filter($subjectArray);
+		if(empty($subjectArray)){
+    		return response()->json(['error' => 'Cant find subject for this semester.'], 400);
+    	}else{
+    		return response()->json($subjects);
+    	}
+
 
 	}
 
