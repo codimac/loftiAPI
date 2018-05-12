@@ -91,8 +91,10 @@ class SubjectController extends Controller {
 
 		if($mon<8 && $year<=$promo-3){ // Si la promo n'est pas encore à l'imac 
 			//echo "Promo pas encore présente";
+			return response()->json(['error' => 'Cant find subject for this promo. PROMO TOO YOUNG'], 400);
 		}else if(($mon>8 && $year<=$promo) || ($year>$promo)){ // Si la promo n'est plus présente à l'imac 
 			//echo "Promo plus présente";
+			return response()->json(['error' => 'Cant find subject for this promo. PROMO TOO OLD'], 400);
 		}else{ // La promo est présente à l'imac
 			//echo "Promo présente </br>";
 
