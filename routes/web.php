@@ -24,8 +24,8 @@ $router->group([
     'prefix' => 'users',
 ], function($router) {
     $router->get('/me', 'UserController@getAuthUser');
-	$router->post('/create', 'UserController@createUser');
-	$router->put('/update/{id}', 'UserController@updateUser');
+    //$router->post('/create', 'UserController@createUser');
+    //$router->put('/update/{id}', 'UserController@updateUser');
 });
 
 $router->group([
@@ -41,6 +41,16 @@ $router->group([
     'middleware' => 'auth:api',
     'prefix' => 'ues',
 ], function($router) {
-    $router->get('/', 'UeController@getAllUes');
+    $router->get('/semesters/', 'UeController@getAllUes');
     $router->get('/semesters/{semester}', 'UeController@getUesBySemester');
+});
+
+$router->group([
+    'middleware' => 'auth:api',
+    'prefix' => 'subjects',
+], function($router) {
+    $router->get('/ues/{ue_id}', 'SubjectController@getSubjectsByUE');
+    $router->get('/semesters/{semestrer}', 'SubjectController@getSubjectsBySemester');
+    //Cette fonction ne marche pas
+    $router->get('/promos/{promo}', 'SubjectController@getSubjectsByPromo');
 });
