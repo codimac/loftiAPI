@@ -66,7 +66,6 @@ class SubjectController extends Controller {
 		  echo $subject->name.'<br>'; 
 		}*/
 
-
 		//S'il n'y a pas de matières pour cet UE 
 		$subjectArray = (array)$subjects;
 		$subjectArray = array_filter($subjectArray);
@@ -76,11 +75,9 @@ class SubjectController extends Controller {
     		return response()->json($subjects);
     	}
 
-
 	}
 
-
-
+	
 
 
     
