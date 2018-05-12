@@ -17,10 +17,10 @@ class Grade extends Migration
             $table->increments('grade_id');
             $table->float('grade');
             $table->float('coefficient');
-            $table->integer('subject_id');
+            $table->integer('subject_id')->unsigned();
             $table->foreign('subject_id')->references('subject_id')->on('subject');
-            $table->integer('student_id');
-            $table->foreign('student_id')->references('student_id')->on('student');
+            $table->integer('student_id')->unsigned();
+            $table->integer('assignment_id')->unsigned();
         });
     }
 
