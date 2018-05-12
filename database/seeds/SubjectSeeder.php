@@ -272,7 +272,7 @@ class SubjectSeeder extends Seeder
         ]);
 
         DB::table('subject')->insert([
-            'name' => "Physique et signal (physique du son)",
+            'name' => "Physique et signal",
             'coefficient' => 1,
             'ue_id' => 14,
         ]);
@@ -406,7 +406,7 @@ class SubjectSeeder extends Seeder
 
         // Année 3 - Semestre 5 - UE 4
         DB::table('subject')->insert([
-            'name' => "Gestion des Relations Humaines",
+            'name' => "Gestion des relations humaines",
             'coefficient' => 1,
             'ue_id' => 23,
         ]);
