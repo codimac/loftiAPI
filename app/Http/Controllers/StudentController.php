@@ -41,8 +41,12 @@ class StudentController extends Controller
         return response()->json($students);
     }
 
-    public function getUeBySemester($year) {
+    public function getStudentsByPromo($year) {
         $students = DB::table('student')->where('promo', $year)->get();
+
+        if($students == 0) {
+            return response()->json(['error' => 'Cant find that promotion.'], 400);
+        }
 
         return response()->json($students);
     }

@@ -4,9 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-// Class App\Http\Controllers\Ue does not exist
-// Sûrement une erreur toute bête...
-
 class Ue extends Model {
 	protected $table = 'ue';
     protected $primaryKey = 'ue_id';
@@ -14,3 +11,6 @@ class Ue extends Model {
 
  	protected $fillable = ['semester', 'ects', 'name'];
 }
+
+// Class App\Http\Controllers\Ue does not exist
+// Sûrement une erreur toute bête...

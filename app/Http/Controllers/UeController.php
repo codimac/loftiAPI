@@ -17,9 +17,19 @@ class UeController extends Controller
         return response()->json($ue);
     }
 
-    public function getStudentsByPromo($semester_id) {
-        $ue = DB::table('ue')->where('semester_id', $semester_id)->get();
+    public function getUeBySemester($semester) {
+        if(is_numeric($semester)) {
+            $ue = DB::table('ue')->where('semester', $semester)->get();
 
-        return response()->json($ue);
+            $ueArray = (array)$ue;
+                $ueArray = array_filter($ueArray);
+                if(empty($ueArray))
+                    return response()->json(['error' => 'Can\'t find that UE.'], 400);
+
+            return response()->json($ue);
+        }
+
+        else
+            return response()->json(['error' => 'Please enter a valid semester.'], 400);
     }
 }
