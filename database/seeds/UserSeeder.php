@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
             'role_id' => 2
         ]);
 
-        for ($i=0; $i<41; $i++) {
+        for ($i=1; $i<150; $i++) {
             $firstname = $faker->firstname;
             $lastname = $faker->unique()->lastname;
             
