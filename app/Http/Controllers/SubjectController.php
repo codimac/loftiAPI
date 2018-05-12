@@ -18,7 +18,6 @@ class SubjectController extends Controller {
 		}
 
     	$subjects = Subject::where('ue_id', '=', $ue_id)->get();
-    	//return response()->json($subjects);
 
     	/*foreach($subjects as $subject){
 		  echo $subject->name; 
