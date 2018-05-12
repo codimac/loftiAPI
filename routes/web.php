@@ -30,18 +30,17 @@ $router->group([
 
 $router->group([
     'middleware' => 'auth:api',
-    'prefix' => 'students',
+    'prefix' => 'promos',
 ], function($router) {
-    $router->get('', 'StudentController@getAllStudents');
-    // A DEPLACER DANS LE CONTROLLER PROMO
-    // $router->get('/promo/{year}', 'PromoController@getStudentsByPromo');
-    $router->get('/promo/{year}', 'StudentController@getStudentsByPromo');
+    $router->get('/', 'PromoController@getAllStudents');
+    $router->get('/{year}', 'PromoController@getStudentsByPromo');
+    $router->get('/{year}/semesters', 'PromoController@getSemestersByPromo');
 });
 
 $router->group([
     'middleware' => 'auth:api',
     'prefix' => 'ues',
 ], function($router) {
-    $router->get('', 'UeController@getAllUe');
+    $router->get('/', 'UeController@getAllUe');
     $router->get('/semesters/{semester}', 'UeController@getUeBySemester');
 });

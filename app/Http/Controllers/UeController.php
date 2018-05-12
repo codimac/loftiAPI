@@ -6,9 +6,6 @@ use App\Models\Ue;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
-// Class App\Http\Controllers\Ue does not exist
-// Sûrement une erreur toute bête...
-
 class UeController extends Controller
 {
     public function getAllUe() {
