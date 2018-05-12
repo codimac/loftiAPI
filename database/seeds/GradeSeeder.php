@@ -30,7 +30,9 @@ class GradeSeeder extends Seeder
                 'coefficient' => $faker->numberBetween($min = 1, $max = 6),
                 //'coefficient' => rand (1, 6),
                 'subject_id' => json_decode($subjects, true)[$random_subj]["subject_id"],
+                //'subject_id' => rand (1, 6),
                 'student_id' => json_decode($students, true)[$random_stud]["student_id"]
+                //'student_id' => rand (1, 6),
             ]);
         }
     }
