@@ -20,6 +20,7 @@ class Grade extends Migration
             $table->integer('subject_id')->unsigned();
             $table->foreign('subject_id')->references('subject_id')->on('subject');
             $table->integer('student_id')->unsigned();
+            $table->integer('assignment_id')->unsigned();
         });
     }
 

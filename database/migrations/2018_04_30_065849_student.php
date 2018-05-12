@@ -24,6 +24,12 @@ class Student extends Migration
         Schema::table('grade', function (Blueprint $table) {
             $table->foreign('student_id')->references('student_id')->on('student');
         });
+
+        Schema::table('grade', function (Blueprint $table) {
+           $table->foreign('student_id')->references('student_id')->on('student');
+        });
+
+        
     }
 
     /**
