@@ -28,11 +28,11 @@ $router->group([
     $router->get('/me', 'UserController@getAuthUser');
 });
 
-$router->group(['middleware' => 'auth:api'], function ($router) {
-    $router->get('/always/true', function () {
-        return response()->json(['ok' => 'ok']);
-    });
-});
+// $router->group(['middleware' => 'auth:api'], function ($router) {
+//     $router->get('/always/true', function () {
+//         return response()->json(['ok' => 'ok']);
+//     });
+// });
 
 $router->get('/test', function() {
     return response()->json([
@@ -41,29 +41,27 @@ $router->get('/test', function() {
 });
 
 
-$router->get('/Subject/All', 'SubjectController@getAll');
-$router->post('/Subject/Add', 'SubjectController@createSubject');
-$router->get('Ue/All', 'UeController@getAll');
-$router->post('Ue/Add', 'UeController@createUe');
+// $router->get('/Subject/All', 'SubjectController@getAll');
+// $router->post('/Subject/Add', 'SubjectController@createSubject');
+// $router->get('Ue/All', 'UeController@getAll');
+// $router->post('Ue/Add', 'UeController@createUe');
 
 
 
 /** Grades */
-$router->get('/Grade/All', 'GradeController@getAll');
+$router->get('/Grades', 'GradeController@getAll');
 
-$router->post('/Grade/Show/Promo/Subject', 'GradeController@getGradesPromoSubject');
-$router->post('/Grade/Show/Promo/Ue', 'GradeController@getGradesPromoUe');
-$router->post('/Grade/Show/Promo/Semester', 'GradeController@getGradesPromoSemester');
+// $router->post('/Grade/Show/Promo/Subject', 'GradeController@getGradesPromoSubject');
+// $router->post('/Grade/Show/Promo/Ue', 'GradeController@getGradesPromoUe');
+// $router->post('/Grade/Show/Promo/Semester', 'GradeController@getGradesPromoSemester');
 
 
 
-/** Supposedly prefixed with the name of the student or user */
-$router->get('/Grade/All', 'GradeController@getGradesStudent');
-$router->post('/Grade/Show/{subject_id}', 'GradeController@getGradesStudentSubject');
-$router->post('/Grade/Show/{ue_id}','GradeController@getGradesStudentUe');
-$router->post('/Grade/Show/{semester}','GradeController@getGradesStudentSemester');
+// /** Supposedly prefixed with the name of the student or user */
+// $router->get('/Grade/All', 'GradeController@getGradesStudent');
 
-$router->get('/Grade/Add', 'GradeController@addGrade');
-$router->get('/Grade/Update/{grade_id}', 'GradeController@updateGrade');
-$router->get('/Grade/Delete/{grade_id}', 'GradeController@deleteGrade');
+
+$router->post('/Grades', 'GradeController@addGrade');
+$router->put('/Grades/{grade_id}', 'GradeController@updateGrade');
+$router->delete('/Grades/{grade_id}', 'GradeController@deleteGrade');
 
