@@ -163,22 +163,7 @@ class GradeController extends Controller
 
 
 	/**
-	 * Add a new grade and assignment associated to a student
-	 * input : request 
-	 */
-
-	public static function addGrade(Request $request){
-		Assignment::insert(
-			['name' => $request->input('subject.name'), 'description' => $request->input('subject.description'), 'coefficient' => $request->input('subject.coefficient')]
-		);
-        Grade::insert(
-            ['grade' => $request->input('grade.userId'),'subject_id' => $request->input('courseId'), 'student_id' => $request->input('grades.userID')]
-		);
-	}
-
-
-	/**
-	 * Add grades and assignments associated to a promo
+	 * Add grades and assignment associated
 	 * input : request 
 	 */
 
