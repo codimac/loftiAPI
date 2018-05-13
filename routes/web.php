@@ -17,6 +17,14 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+
+$router->get('/test', function() {
+    return response()->json([
+        'message' => 'Ce hello world vient de l\'API'
+    ]);
+});
+
+
 $router->group(['prefix' => 'auth'], function($router) {
     $router->post('/signin', 'AuthController@signIn');
 });
@@ -50,17 +58,25 @@ $router->group([
    }
 });
 
+
+
+$router->get('/grades/{student_id}', 'GradeController@getGradesStudent');
+$router->get('/grades/{student_id}/{subject_id}', 'GradeController@getGradesStudentSubject');
+$router->get('/grades/{student_id}/{ue_id}', 'GradeController@getGradesStudentUe');
+$router->get('/grades/{student_id}/{semester}', 'GradeController@getGradesStudentSemester');
+
+$router->get('/grades/{promo}/{subject_id}', 'GradeController@getGradesPromoSubject');
+$router->get('/grades/{promo}/{ue_id}', 'GradeController@getGradesPromoUe');
+$router->get('/grades/{promo}/{semester}', 'GradeController@getGradesPromoSemester');
+
+
 // $router->group(['middleware' => 'auth:api'], function ($router) {
 //     $router->get('/always/true', function () {
 //         return response()->json(['ok' => 'ok']);
 //     });
 // });
 
-$router->get('/test', function() {
-    return response()->json([
-        'message' => 'Ce hello world vient de l\'API'
-    ]);
-});
+
 
 
 // $router->get('/Subject/All', 'SubjectController@getAll');
@@ -69,18 +85,6 @@ $router->get('/test', function() {
 // $router->post('Ue/Add', 'UeController@createUe');
 
 
-
-/** Grades */
-$router->get('/grades', 'GradeController@getAll');
-
-// $router->post('/Grade/Show/Promo/Subject', 'GradeController@getGradesPromoSubject');
-// $router->post('/Grade/Show/Promo/Ue', 'GradeController@getGradesPromoUe');
-// $router->post('/Grade/Show/Promo/Semester', 'GradeController@getGradesPromoSemester');
-
-
-
-// /** Supposedly prefixed with the name of the student or user */
-// $router->get('/Grade/All', 'GradeController@getGradesStudent');
 
 
 
