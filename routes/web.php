@@ -35,17 +35,17 @@ $router->group([
        $router->post('/grades', function($router) {
            return response()->json([
                'message' => 'Vous ne pouvez pas faire ça'
-           ])
+           ]);
        });
         $router->put('/grades/{grade_id}', function($router) {
            return response()->json([
                'message' => 'Vous ne pouvez pas faire ça'
-           ])
+           ]);
        });
         $router->delete('/grades/{grade_id}', function($router) {
            return response()->json([
                'message' => 'Vous ne pouvez pas faire ça'
-           ])
+           ]);
        });
    }
 });
