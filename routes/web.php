@@ -49,7 +49,7 @@ $router->get('/test', function() {
 
 
 /** Grades */
-$router->get('/Grades', 'GradeController@getAll');
+$router->get('/grades', 'GradeController@getAll');
 
 // $router->post('/Grade/Show/Promo/Subject', 'GradeController@getGradesPromoSubject');
 // $router->post('/Grade/Show/Promo/Ue', 'GradeController@getGradesPromoUe');
@@ -61,7 +61,7 @@ $router->get('/Grades', 'GradeController@getAll');
 // $router->get('/Grade/All', 'GradeController@getGradesStudent');
 
 
-$router->post('/Grades', 'GradeController@addGrade');
-$router->put('/Grades/{grade_id}', 'GradeController@updateGrade');
-$router->delete('/Grades/{grade_id}', 'GradeController@deleteGrade');
+$router->post('/grades', 'GradeController@addGradesPromo');
+$router->put('/grades/{grade_id}', 'GradeController@updateGrade');
+$router->delete('/grades/{grade_id}', 'GradeController@deleteGrade');
 
