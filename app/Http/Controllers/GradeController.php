@@ -163,14 +163,37 @@ class GradeController extends Controller
 
 
 	/**
-	 * Add a new grade to a student
-	 * input : request (grade, coefficient, subject_id, user_id)
+	 * Add a new grade and assignment associated to a student
+	 * input : request 
 	 */
 
 	public static function addGrade(Request $request){
-        Grade::insert(
-            ['grade' => $request->input('grade'), 'coefficient' => $request->input('coefficient'),'subject_id' => $request->input('subject_id'), 'student_id' => $request->input('student_id')]
+		Assignment::insert(
+			['name' => $request->input('subject.name'), 'description' => $request->input('subject.description'), 'coefficient' => $request->input('subject.coefficient')]
 		);
+        Grade::insert(
+            ['grade' => $request->input('grade.userId'),'subject_id' => $request->input('courseId'), 'student_id' => $request->input('grades.userID')]
+		);
+	}
+
+
+	/**
+	 * Add grades and assignments associated to a promo
+	 * input : request 
+	 */
+
+	public static function addGradesPromo(Request $request){
+		Assignment::insert(
+			['name' => $request->input('subject.name'), 'description' => $request->input('subject.description'), 'coefficient' => $request->input('subject.coefficient')]
+		);
+		$current_assignment_id = Assignment::where('name', $request->input('name'))->select('assignment_id'); //Foreign key constraint on the grade.assignment_id so we get the current assignment that is beign added to use it later.
+		$grades = $request->input('grades');
+		foreach ($grades as $userID => $note) {
+			Grade::insert(
+            	['grade' => $note,'subject_id' => $request->input('courseId'), 'student_id' => $userID, 'assignment_id' => $current_assignment_id]
+			);
+		}
+        
 	}
 
 	/**
