@@ -25,7 +25,29 @@ $router->group([
     'middleware' => 'auth:api',
     'prefix' => 'users',
 ], function($router) {
-    $router->get('/me', 'UserController@getAuthUser');
+   $test_admin = $router->get('/me', 'UserController@getAuthUser');
+   if($test_admin.role_id == '1'){
+        $router->post('/grades', 'GradeController@addGradesPromo');
+        $router->put('/grades/{grade_id}', 'GradeController@updateGrade');
+        $router->delete('/grades/{grade_id}', 'GradeController@deleteGrade');
+   }
+   else{
+       $router->post('/grades', function($router) {
+           return response()->json([
+               'message' => 'Vous ne pouvez pas faire ça'
+           ])
+       });
+        $router->put('/grades/{grade_id}', function($router) {
+           return response()->json([
+               'message' => 'Vous ne pouvez pas faire ça'
+           ])
+       });
+        $router->delete('/grades/{grade_id}', function($router) {
+           return response()->json([
+               'message' => 'Vous ne pouvez pas faire ça'
+           ])
+       });
+   }
 });
 
 // $router->group(['middleware' => 'auth:api'], function ($router) {
@@ -61,7 +83,5 @@ $router->get('/grades', 'GradeController@getAll');
 // $router->get('/Grade/All', 'GradeController@getGradesStudent');
 
 
-$router->post('/grades', 'GradeController@addGradesPromo');
-$router->put('/grades/{grade_id}', 'GradeController@updateGrade');
-$router->delete('/grades/{grade_id}', 'GradeController@deleteGrade');
+
 
