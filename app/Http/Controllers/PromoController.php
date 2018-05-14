@@ -13,7 +13,7 @@ class PromoController extends Controller
         $students = DB::table('student')
                         ->join('user', 'user.user_id', '=', 'student.user_id')
                         ->join('promo', 'promo.promo_id', '=', 'student.promo_id')
-                        ->select('user.firstname', 'user.lastname', 'student.td', 'promo.year')
+                        ->select('user.firstname', 'user.lastname', 'user.username', 'student.id', 'student.td', 'promo.year')
                         ->get();
 
         return response()->json($students);
