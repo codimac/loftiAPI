@@ -19,6 +19,10 @@ class GradeController extends Controller
 	}
 
 
+
+	// ERROR : 400 : y'en a pas   415 requetes incorrecte
+
+
 	/** GRADES FOR A STUDENT */
 
 
@@ -159,7 +163,7 @@ class GradeController extends Controller
 
 
 
-	/** ADD DELETE UPDATE GRADE FOR ONE STUDENT */
+	/** ADD DELETE UPDATE GRADES / ASSIGNMENT */
 
 
 	/**
@@ -167,7 +171,7 @@ class GradeController extends Controller
 	 * input : request 
 	 */
 
-	public static function addGradesPromo(Request $request){
+	public static function addGradesAssignment(Request $request){
 		Assignment::insert(
 			['name' => $request->input('subject.name'), 'description' => $request->input('subject.description'), 'coefficient' => $request->input('subject.coefficient')]
 		);
