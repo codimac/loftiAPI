@@ -34,28 +34,28 @@ $router->group([
     'prefix' => 'users',
 ], function($router) {
    $test_admin = $router->get('/me', 'UserController@getAuthUser');
-   if($test_admin.role_id == '1'){
-        $router->post('/grades', 'GradeController@addGradesPromo');
-        $router->put('/grades/{grade_id}', 'GradeController@updateGrade');
-        $router->delete('/grades/{grade_id}', 'GradeController@deleteGrade');
-   }
-   else{
-       $router->post('/grades', function($router) {
-           return response()->json([
-               'message' => 'Vous ne pouvez pas faire ça'
-           ]);
-       });
-        $router->put('/grades/{grade_id}', function($router) {
-           return response()->json([
-               'message' => 'Vous ne pouvez pas faire ça'
-           ]);
-       });
-        $router->delete('/grades/{grade_id}', function($router) {
-           return response()->json([
-               'message' => 'Vous ne pouvez pas faire ça'
-           ]);
-       });
-   }
+//    if($test_admin.role_id == '1'){
+//         $router->post('/grades', 'GradeController@addGradesPromo');
+//         $router->put('/grades/{grade_id}', 'GradeController@updateGrade');
+//         $router->delete('/grades/{grade_id}', 'GradeController@deleteGrade');
+//    }
+//    else{
+//        $router->post('/grades', function($router) {
+//            return response()->json([
+//                'message' => 'Vous ne pouvez pas faire ça'
+//            ]);
+//        });
+//         $router->put('/grades/{grade_id}', function($router) {
+//            return response()->json([
+//                'message' => 'Vous ne pouvez pas faire ça'
+//            ]);
+//        });
+//         $router->delete('/grades/{grade_id}', function($router) {
+//            return response()->json([
+//                'message' => 'Vous ne pouvez pas faire ça'
+//            ]);
+//        });
+//    }
 });
 
 
