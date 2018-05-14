@@ -15,7 +15,7 @@ class Student extends Migration
     {
         Schema::create('student', function (Blueprint $table) {
             $table->increments('student_id');
-            $table->integer('promo');
+            $table->integer('promo_id')->unsigned();
             $table->string('td');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('user_id')->on('user');

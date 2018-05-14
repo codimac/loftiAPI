@@ -33,6 +33,7 @@ class Assignment extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('grade');
         Schema::dropIfExists('assignment');
     }
 }
