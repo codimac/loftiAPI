@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class StudentSeeder extends Seeder
+class PromoSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,15 +11,13 @@ class StudentSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker\Factory::create();
+       $faker = Faker\Factory::create();
 
-        for($i=1; $i<30; $i++) {
-            DB::table('student')->insert([
+        for($i=2; $i<152; $i++) {
+            DB::table('promo')->insert([
                 'promo_id' => $faker->numberBetween($min = 1, $max = 3),
-                'td' => $faker->numberBetween($min = 1, $max = 2),
-                'user_id' => $i,
+                'name' => $faker->numberBetween($min = 2018, $max = 2020),
             ]);
         }
     }
 }
-
