@@ -89,3 +89,34 @@ $router->get('/grades/{promo}/{semester}', 'GradeController@getGradesPromoSemest
 
 
 
+    $router->get('/me', 'UserController@getAuthUser');
+    //$router->post('/create', 'UserController@createUser');
+    //$router->put('/update/{id}', 'UserController@updateUser');
+});
+
+$router->group([
+    'middleware' => 'auth:api',
+    'prefix' => 'promos',
+], function($router) {
+    $router->get('/', 'PromoController@getAllStudents');
+    $router->get('/{year}', 'PromoController@getStudentsByPromo');
+    $router->get('/{year}/semesters', 'PromoController@getSemestersByPromo');
+});
+
+$router->group([
+    'middleware' => 'auth:api',
+    'prefix' => 'ues',
+], function($router) {
+    $router->get('/semesters/', 'UeController@getAllUes');
+    $router->get('/semesters/{semesterId}', 'UeController@getUesBySemester');
+});
+
+$router->group([
+    'middleware' => 'auth:api',
+    'prefix' => 'subjects',
+], function($router) {
+    $router->get('/ues/{ueId}', 'SubjectController@getSubjectsByUe');
+    $router->get('/semesters/{semestrerId}', 'SubjectController@getSubjectsBySemester');
+    //Cette fonction ne marche pas
+    $router->get('/promos/{year}', 'SubjectController@getSubjectsByPromo');
+});

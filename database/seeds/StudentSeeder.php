@@ -13,7 +13,7 @@ class StudentSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
 
-        for($i=1; $i<30; $i++) {
+        for($i=2; $i<152; $i++) {
             DB::table('student')->insert([
                 'promo_id' => $faker->numberBetween($min = 1, $max = 3),
                 'td' => $faker->numberBetween($min = 1, $max = 2),
@@ -22,4 +22,3 @@ class StudentSeeder extends Seeder
         }
     }
 }
-

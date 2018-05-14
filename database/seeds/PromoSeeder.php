@@ -11,12 +11,11 @@ class PromoSeeder extends Seeder
      */
     public function run()
     {
-       $faker = Faker\Factory::create();
+        $faker = Faker\Factory::create();
 
-        for($i=2; $i<152; $i++) {
+        for($i=0; $i<3; $i++) {
             DB::table('promo')->insert([
-                'promo_id' => $faker->numberBetween($min = 1, $max = 3),
-                'name' => $faker->numberBetween($min = 2018, $max = 2020),
+                'year' => 2018 + $i,
             ]);
         }
     }

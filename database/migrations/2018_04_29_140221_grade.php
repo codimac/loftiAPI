@@ -15,12 +15,12 @@ class Grade extends Migration
     {
         Schema::create('grade', function (Blueprint $table) {
             $table->increments('grade_id');
-            $table->float('grade');
-            $table->float('coefficient');
+            $table->integer('grade');
+            $table->integer('coefficient');
             $table->integer('subject_id')->unsigned();
             $table->foreign('subject_id')->references('subject_id')->on('subject');
             $table->integer('student_id')->unsigned();
-            $table->integer('assignment_id')->unsigned();
+            $table->foreign('student_id')->references('student_id')->on('student');
         });
     }
 
@@ -32,6 +32,5 @@ class Grade extends Migration
     public function down()
     {
         Schema::dropIfExists('grade');
-        Schema::dropIfExists('student');
     }
 }
