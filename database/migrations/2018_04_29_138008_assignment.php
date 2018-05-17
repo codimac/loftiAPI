@@ -17,7 +17,6 @@ class Assignment extends Migration
             $table->increments('assignment_id');
             $table->string('name');
             $table->string('description');
-            $table->float('coefficient');
             $table->timestamps();
         });
     }

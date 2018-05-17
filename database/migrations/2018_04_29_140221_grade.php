@@ -21,6 +21,7 @@ class Grade extends Migration
             $table->foreign('subject_id')->references('subject_id')->on('subject');
             $table->integer('student_id')->unsigned();
             $table->integer('assignment_id')->unsigned();
+            $table->foreign('assignment_id')->references('assignment_id')->on('assignment');
         });
     }
 
@@ -32,6 +33,5 @@ class Grade extends Migration
     public function down()
     {
         Schema::dropIfExists('grade');
-        Schema::dropIfExists('student');
     }
 }
