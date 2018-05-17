@@ -52,8 +52,8 @@ class GradeController extends Controller
 	public static function getGradesStudentSubject($student_id, $subject_id) {
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->where([
-			'subject.subject_id' => $student_id,
-			'grade.student_id' => $subject_id
+			'subject.subject_id' => $subject_id,
+			'grade.student_id' => $student_id
 		])->select('grade.grade', 'grade.coefficient')
 		->get();
 		return $grades;
@@ -70,8 +70,8 @@ class GradeController extends Controller
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->join('ue', 'ue.ue_id', '=', 'subject.ue_id')
 		->where([
-			'ue.ue_id' => $student_id,
-			'grade.student_id' => $ue_id
+			'ue.ue_id' => $ue_id,
+			'grade.student_id' => $student_id
 		])->select('subject.name','subject.coefficient', 'grade.grade', 'grade.coefficient')
 		->orderBy('subject.name')
 		->get();
@@ -103,18 +103,37 @@ class GradeController extends Controller
 
 
 	/** 
+	 * Fetch all the grade for a promo
+	 * Input : $year
+	 * @return $grades with column ('student.student_id', subject.name, grade.grade, grade.coefficient)
+	 */
+
+	public static function getGradesPromo($year) {
+		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
+		->join('student', 'student.student_id', '=', 'grade.student_id')
+		->join('promo', 'promo.promo_id', "=", "student.promo_id")
+		->where([
+			'promo.year' => $promo
+		])->select('student.student_id','subject.name','grade.grade', 'grade.coefficient')
+		->get();
+		return $grades;
+	}
+
+
+	/** 
 	 * Fetch all the grade for a promo in a given subject
-	 * Input : request (promo, subject)
+	 * Input : $year, $subject_id
 	 * @return $grades with column (grade.grade, grade.coefficient)
 	 */
 
-	public static function getGradesPromoSubject(Request $request) {
+	public static function getGradesPromoSubject($year, $subject_id) {
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->join('student', 'student.student_id', '=', 'grade.student_id')
+		->join('promo', 'promo.promo_id', "=", "student.promo_id")
 		->where([
-			'subject.subject_id' => $request->input('subject_id'),
-			'student.promo' => $request->input('promo')
-		])->select('grade.grade', 'grade.coefficient')
+			'subject.subject_id' => $subject_id,
+			'promo.year' => $year
+		])->select('student.student_id','grade.grade', 'grade.coefficient')
 		->get();
 		return $grades;
 	}
@@ -122,19 +141,20 @@ class GradeController extends Controller
 
 	/** 
 	 * Fetch all the grade for a promo in a given ue
-	 * Input : request (promo, ue)
+	 * Input : $year, $ue_id
 	 * Sorted by subject.name
 	 * @return $grades with column (subject.name, subject.coefficient, grade.grade, grade.coefficient)
 	 */
 
-	public static function getGradesPromoUe(Request $request) {
+	public static function getGradesPromoUe($year, $ue_id) {
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->join('ue', 'ue.ue_id', '=', 'subject.ue_id')
 		->join('student', 'student.student_id', '=', 'grade.student_id')
+		->join('promo', 'promo.promo_id', "=", "student.promo_id")
 		->where([
-			'ue.ue_id' => $request->input('ue_id'),
-			'student.promo' => $request->input('promo')
-		])->select('subject.name','subject.coefficient', 'grade.grade', 'grade.coefficient')
+			'ue.ue_id' => $ue_id,
+			'promo.year' => $year
+		])->select('student.student_id','subject.name','subject.coefficient', 'grade.grade', 'grade.coefficient')
 		->orderBy('subject.name')
 		->get();
 		return $grades;
@@ -142,19 +162,20 @@ class GradeController extends Controller
 
 	/** 
 	 * Fetch all the grade for a promo in a given semester
-	 * Input : request (promo, semester)
+	 * Input : $year, $semester
 	 * Sorted by ue.name
 	 * @return $grades with column (ue.name, subject.name, subject.coefficient,grade.grade, grade.coefficient)
 	 */
 
-	public static function getGradesPromoSemester(Request $request) {
+	public static function getGradesPromoSemester($year, $semester) {
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->join('ue', 'ue.ue_id', '=', 'subject.ue_id')
 		->join('student', 'student.student_id', '=', 'grade.student_id')
+		->join('promo', 'promo.promo_id', "=", "student.promo_id")
 		->where([
-			'ue.semester' => $request->input('semester'),
-			'student.promo' => $request->input('promo')
-		])->select('ue.name' ,'subject.name','subject.coefficient', 'grade.grade', 'grade.coefficient')
+			'ue.semester' => $semester,
+			'promo.year' => $year
+		])->select('student.student_id','ue.name' ,'subject.name','subject.coefficient', 'grade.grade', 'grade.coefficient')
 		->orderBy('ue.name')
 		->get();
 		return $grades;
