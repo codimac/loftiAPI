@@ -8,10 +8,56 @@ use App\Models\Assignment;
 
 class AssignmentController extends Controller
 {
+
     /**
-	 * Add grades and assignment associated
-	 * input : request 
-	 */
+     * 
+     * Sorted by UE
+     */
+
+
+    public static function getAssignments(){
+        $assignmentsData = Assignment::join('grade', 'grade.assignment_id', '=', 'assignment.assignment_id') // Just to get the coefficient and the subject (grade.coefficient)
+        ->join('subject', 'subject.subject_id', '=', 'grade.subject_id')
+        ->join('ue', 'ue.ue_id', 'subject.ue_id')
+        ->join('student', 'student.student_id', '=', 'grade.student_id')
+        ->join('user', 'user.user_id', '=', 'student.user_id')
+        ->select('ue.ue_id', 'ue.name AS ue_name', 'subject.subject_id', 'subject.name AS subject_name', 'assignment.assignment_id', 'assignment.name AS assignment_name', 'assignment.description', 'grade.coefficient')
+        ->orderBy("ue.ue_id")
+        ->get(); 
+
+
+
+        foreach ($assignmentsData as $keys) {
+            $current_ue = $keys->first();
+        }
+
+        // return $current_ue;
+        return $assignmentsData;
+
+        // $resultat->toArray();
+
+        // return $resultat;
+        
+        // $assignments = collec(['name' => 'Desk', 'price' => 200]);
+
+        // $keyed = $assignmentsData->keyBy('ue_id');
+
+        // $grouped = $keyed->mapToGroups(function ($item, $key) {
+        //     return [$item['subject_id'] => $item['subject_name']];
+        // });
+
+        // $key = $assignmentsData->keys();
+
+        //The put method sets the given key and value in the collection:
+        // $collection->put('key',$value);
+
+        // $assignmentsData->toArray();
+
+        // return $key;
+        // return $grouped;
+    }
+
+
 
 	public static function addGradesAssignment(Request $request){
         $name = $request->input('assignment.name');
@@ -20,8 +66,6 @@ class AssignmentController extends Controller
 			['name' => $name, 'description' => $description]
 		);
         $current_assignment_id = Assignment::where('name', $name)->value("assignment_id"); //Foreign key constraint on the grade.assignment_id so we get the current assignment that is beign added to use it later.
-        // $current_assignment_id = $current_assignment_id->assignment_id;
-        //var_dump($current_assignment);
 		$grades = $request->input('grades');
 		foreach ($grades as $userID => $note) {
 			Grade::insert(

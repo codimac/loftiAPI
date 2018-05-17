@@ -37,7 +37,7 @@ class GradeController extends Controller
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->join('student', 'student.student_id', '=', 'grade.student_id')
 		->where('grade.student_id', $student_id)
-		->select('subject.name AS subject_name','grade.grade', 'grade.coefficient')
+		->select('subject.name AS subject_name','grade.grade', 'assignment.coefficient AS grade_coefficient')
 		->orderBy('subject.name')
 		->get();
 		return $grades;
@@ -51,10 +51,11 @@ class GradeController extends Controller
 
 	public static function getGradesStudentSubject($student_id, $subject_id) {
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
+		->join('assignment', 'assignment.assignment_id', '=', 'grade.assignment_id')
 		->where([
 			'subject.subject_id' => $subject_id,
 			'grade.student_id' => $student_id
-		])->select('grade.grade', 'grade_coefficient')
+		])->select('grade.grade', 'assignment.coefficient AS grade_coefficient')
 		->get();
 		return $grades;
 	}
@@ -69,10 +70,11 @@ class GradeController extends Controller
 	public static function getGradesStudentUe($student_id, $ue_id) {
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->join('ue', 'ue.ue_id', '=', 'subject.ue_id')
+		->join('assignment', 'assignment.assignment_id', '=', 'grade.assignment_id')
 		->where([
 			'ue.ue_id' => $ue_id,
 			'grade.student_id' => $student_id
-		])->select('subject.name AS subject_name','subject.coefficient AS subject_coefficient', 'grade.grade', 'grade.coefficient AS grade_coeffcient')
+		])->select('subject.name AS subject_name','subject.coefficient AS subject_coefficient', 'grade.grade', 'assignment.coefficient AS grade_coefficient')
 		->orderBy('subject.name')
 		->get();
 		return $grades;
@@ -88,10 +90,11 @@ class GradeController extends Controller
 	public static function getGradesStudentSemester($student_id, $semester) {
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->join('ue', 'ue.ue_id', '=', 'subject.ue_id')
+		->join('assignment', 'assignment.assignment_id', '=', 'grade.assignment_id')
 		->where([
 			'ue.semester' => $semester,
 			'grade.student_id' => $student_id
-		])->select('ue.name AS ue_name' ,'subject.name AS subject_name','subject.coefficient AS subject_coefficient', 'grade.grade', 'grade.coefficient AS grade_coefficient')
+		])->select('ue.name AS ue_name' ,'subject.name AS subject_name','subject.coefficient AS subject_coefficient', 'grade.grade', 'assignment.coefficient AS grade_coefficient')
 		->orderBy('ue.name')
 		->get();
 		return $grades;
@@ -112,9 +115,10 @@ class GradeController extends Controller
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->join('student', 'student.student_id', '=', 'grade.student_id')
 		->join('promo', 'promo.promo_id', "=", "student.promo_id")
+		->join('assignment', 'assignment.assignment_id', '=', 'grade.assignment_id')
 		->where([
 			'promo.year' => $promo
-		])->select('student.student_id','subject.name AS subject_name','grade.grade', 'grade.coefficient AS grade_coefficient')
+		])->select('student.student_id','subject.name AS subject_name','grade.grade', 'assignment.coefficient AS grade_coefficient')
 		->get();
 		return $grades;
 	}
@@ -130,10 +134,11 @@ class GradeController extends Controller
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->join('student', 'student.student_id', '=', 'grade.student_id')
 		->join('promo', 'promo.promo_id', "=", "student.promo_id")
+		->join('assignment', 'assignment.assignment_id', '=', 'grade.assignment_id')
 		->where([
 			'subject.subject_id' => $subject_id,
 			'promo.year' => $year
-		])->select('student.student_id','grade.grade', 'grade.coefficient AS grade_coefficient')
+		])->select('student.student_id','grade.grade', 'assignment.coefficient AS grade_coefficient')
 		->get();
 		return $grades;
 	}
@@ -151,10 +156,11 @@ class GradeController extends Controller
 		->join('ue', 'ue.ue_id', '=', 'subject.ue_id')
 		->join('student', 'student.student_id', '=', 'grade.student_id')
 		->join('promo', 'promo.promo_id', "=", "student.promo_id")
+		->join('assignment', 'assignment.assignment_id', '=', 'grade.assignment_id')
 		->where([
 			'ue.ue_id' => $ue_id,
 			'promo.year' => $year
-		])->select('student.student_id','subject.name AS subject_name','subject.coefficient AS subject_coefficient', 'grade.grade', 'grade.coefficient AS grade_coefficient')
+		])->select('student.student_id','subject.name AS subject_name','subject.coefficient AS subject_coefficient', 'grade.grade', 'assignment.coefficient AS grade_coefficient')
 		->orderBy('subject.name')
 		->get();
 		return $grades;
@@ -172,10 +178,11 @@ class GradeController extends Controller
 		->join('ue', 'ue.ue_id', '=', 'subject.ue_id')
 		->join('student', 'student.student_id', '=', 'grade.student_id')
 		->join('promo', 'promo.promo_id', "=", "student.promo_id")
+		->join('assignment', 'assignment.assignment_id', '=', 'grade.assignment_id')
 		->where([
 			'ue.semester' => $semester,
 			'promo.year' => $year
-		])->select('student.student_id','ue.name AS ue_name','subject.name AS subject_name','subject.coefficient AS subject_coefficient', 'grade.grade', 'grade.coefficient AS grade_coefficient' )
+		])->select('student.student_id','ue.name AS ue_name','subject.name AS subject_name','subject.coefficient AS subject_coefficient', 'grade.grade', 'assignment.coefficient AS grade_coefficient')
 		->orderBy('ue.name')
 		->get();
 		return $grades;
