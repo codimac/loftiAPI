@@ -16,7 +16,6 @@ class Grade extends Migration
         Schema::create('grade', function (Blueprint $table) {
             $table->increments('grade_id');
             $table->float('grade');
-            $table->float('coefficient');
             $table->integer('subject_id')->unsigned();
             $table->foreign('subject_id')->references('subject_id')->on('subject');
             $table->integer('student_id')->unsigned();
