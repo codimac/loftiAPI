@@ -28,7 +28,7 @@ class GradeController extends Controller
 
 	/**
 	 * Fetch all the Grades for one student
-	 * Input : request (student_id) or student name ?
+	 * Input : $student_id
 	 * Sorted by subject.name 
 	 * @return $grades with column (grade.grade, grade.coefficient, subject.name)
 	 */
@@ -45,7 +45,7 @@ class GradeController extends Controller
 
 	/** 
 	 * Fetch all the grade for one student in a given subject
-	 * Input : request (student_id, subject_id)
+	 * Input : $student_id, $subject_id
 	 * @return $grades with column (grade.grade, grade.coefficient)
 	 */
 
@@ -61,9 +61,9 @@ class GradeController extends Controller
 
 	/** 
 	 * Fetch all the grade for one student in a given UE
-	 * Input : request (student_id, ue_id)
+	 * Input : $student_id, $ue_id
 	 * Sorted by subject.name
-	 * @return $grades with column (subject.name, subject.coefficient, grade.grade, grade.coefficient)
+	 * @return $grades with column (subject_name, subject_coefficient, grade.grade, grade_coefficient)
 	 */
 
 	public static function getGradesStudentUe($student_id, $ue_id) {
@@ -72,7 +72,7 @@ class GradeController extends Controller
 		->where([
 			'ue.ue_id' => $ue_id,
 			'grade.student_id' => $student_id
-		])->select('subject.name','subject.coefficient', 'grade.grade', 'grade.coefficient')
+		])->select('subject.name AS subject_name','subject.coefficient AS subject_coefficient', 'grade.grade', 'grade.coefficient AS grade_coeffcient')
 		->orderBy('subject.name')
 		->get();
 		return $grades;
@@ -82,7 +82,7 @@ class GradeController extends Controller
 	 * Fetch all the grade for one student in a given semester
 	 * Input : request (student_id, semester)
 	 * Sorted by ue.name
-	 * @return $grades with column (ue.name, subject.name, subject.coefficient,grade.grade, grade.coefficient)
+	 * @return $grades with column (ue_name, subject_name, subject_coefficient,grade.grade, grade_coefficient)
 	 */
 
 	public static function getGradesStudentSemester($student_id, $semester) {
@@ -91,7 +91,7 @@ class GradeController extends Controller
 		->where([
 			'ue.semester' => $semester,
 			'grade.student_id' => $student_id
-		])->select('ue.name' ,'subject.name','subject.coefficient', 'grade.grade', 'grade.coefficient')
+		])->select('ue.name AS ue_name' ,'subject.name AS subject_name','subject.coefficient AS subject_coefficient', 'grade.grade', 'grade.coefficient AS grade_coefficient')
 		->orderBy('ue.name')
 		->get();
 		return $grades;
@@ -105,7 +105,7 @@ class GradeController extends Controller
 	/** 
 	 * Fetch all the grade for a promo
 	 * Input : $year
-	 * @return $grades with column ('student.student_id', subject.name, grade.grade, grade.coefficient)
+	 * @return $grades with column ('student.student_id', subject_name, grade.grade, grade_coefficient)
 	 */
 
 	public static function getGradesPromo($year) {
@@ -114,7 +114,7 @@ class GradeController extends Controller
 		->join('promo', 'promo.promo_id', "=", "student.promo_id")
 		->where([
 			'promo.year' => $promo
-		])->select('student.student_id','subject.name','grade.grade', 'grade.coefficient')
+		])->select('student.student_id','subject.name AS subject_name','grade.grade', 'grade.coefficient AS grade_coefficient')
 		->get();
 		return $grades;
 	}
@@ -123,7 +123,7 @@ class GradeController extends Controller
 	/** 
 	 * Fetch all the grade for a promo in a given subject
 	 * Input : $year, $subject_id
-	 * @return $grades with column (grade.grade, grade.coefficient)
+	 * @return $grades with column (student.student_id, grade.grade, grade_coefficient)
 	 */
 
 	public static function getGradesPromoSubject($year, $subject_id) {
@@ -133,7 +133,7 @@ class GradeController extends Controller
 		->where([
 			'subject.subject_id' => $subject_id,
 			'promo.year' => $year
-		])->select('student.student_id','grade.grade', 'grade.coefficient')
+		])->select('student.student_id','grade.grade', 'grade.coefficient AS grade_coefficient')
 		->get();
 		return $grades;
 	}
@@ -143,7 +143,7 @@ class GradeController extends Controller
 	 * Fetch all the grade for a promo in a given ue
 	 * Input : $year, $ue_id
 	 * Sorted by subject.name
-	 * @return $grades with column (subject.name, subject.coefficient, grade.grade, grade.coefficient)
+	 * @return $grades with column (student.student_id, subject_name, subject_coefficient, grade.grade, grade_coefficient)
 	 */
 
 	public static function getGradesPromoUe($year, $ue_id) {
@@ -154,7 +154,7 @@ class GradeController extends Controller
 		->where([
 			'ue.ue_id' => $ue_id,
 			'promo.year' => $year
-		])->select('student.student_id','subject.name','subject.coefficient', 'grade.grade', 'grade.coefficient')
+		])->select('student.student_id','subject.name AS subject_name','subject.coefficient AS subject_coefficient', 'grade.grade', 'grade.coefficient AS grade_coefficient')
 		->orderBy('subject.name')
 		->get();
 		return $grades;
@@ -164,7 +164,7 @@ class GradeController extends Controller
 	 * Fetch all the grade for a promo in a given semester
 	 * Input : $year, $semester
 	 * Sorted by ue.name
-	 * @return $grades with column (ue.name, subject.name, subject.coefficient,grade.grade, grade.coefficient)
+	 * @return $grades with column (student.student_id, ue_name, subject_name, subject_coefficient,grade.grade, grade_coefficient)
 	 */
 
 	public static function getGradesPromoSemester($year, $semester) {
@@ -175,7 +175,7 @@ class GradeController extends Controller
 		->where([
 			'ue.semester' => $semester,
 			'promo.year' => $year
-		])->select('student.student_id','ue.name' ,'subject.name','subject.coefficient', 'grade.grade', 'grade.coefficient')
+		])->select('student.student_id','ue.name AS ue_name','subject.name AS subject_name','subject.coefficient AS subject_coefficient', 'grade.grade', 'grade.coefficient AS grade_coefficient' )
 		->orderBy('ue.name')
 		->get();
 		return $grades;
