@@ -30,14 +30,14 @@ class GradeController extends Controller
 	 * Fetch all the Grades for one student
 	 * Input : $student_id
 	 * Sorted by subject.name 
-	 * @return $grades with column (grade.grade, grade.coefficient, subject.name)
+	 * @return $grades with column (subject_name, grade.grade, grade_coefficient)
 	 */
     
    public static function getGradesStudent($student_id) {
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->join('student', 'student.student_id', '=', 'grade.student_id')
 		->where('grade.student_id', $student_id)
-		->select('grade.grade', 'grade.coefficient', 'subject.name')
+		->select('subject.name AS subject_name','grade.grade', 'grade.coefficient')
 		->orderBy('subject.name')
 		->get();
 		return $grades;
@@ -46,7 +46,7 @@ class GradeController extends Controller
 	/** 
 	 * Fetch all the grade for one student in a given subject
 	 * Input : $student_id, $subject_id
-	 * @return $grades with column (grade.grade, grade.coefficient)
+	 * @return $grades with column (grade.grade, grade_coefficient)
 	 */
 
 	public static function getGradesStudentSubject($student_id, $subject_id) {
@@ -54,7 +54,7 @@ class GradeController extends Controller
 		->where([
 			'subject.subject_id' => $subject_id,
 			'grade.student_id' => $student_id
-		])->select('grade.grade', 'grade.coefficient')
+		])->select('grade.grade', 'grade_coefficient')
 		->get();
 		return $grades;
 	}
@@ -80,7 +80,7 @@ class GradeController extends Controller
 
 	/** 
 	 * Fetch all the grade for one student in a given semester
-	 * Input : request (student_id, semester)
+	 * Input : $student_id, $semester)
 	 * Sorted by ue.name
 	 * @return $grades with column (ue_name, subject_name, subject_coefficient,grade.grade, grade_coefficient)
 	 */
@@ -184,45 +184,8 @@ class GradeController extends Controller
 
 
 
-	/** ADD DELETE UPDATE GRADES / ASSIGNMENT */
 
 
-	/**
-	 * Add grades and assignment associated
-	 * input : request 
-	 */
-
-	public static function addGradesAssignment(Request $request){
-		Assignment::insert(
-			['name' => $request->input('subject.name'), 'description' => $request->input('subject.description'), 'coefficient' => $request->input('subject.coefficient')]
-		);
-		$current_assignment_id = Assignment::where('name', $request->input('name'))->select('assignment_id'); //Foreign key constraint on the grade.assignment_id so we get the current assignment that is beign added to use it later.
-		$grades = $request->input('grades');
-		foreach ($grades as $userID => $note) {
-			Grade::insert(
-            	['grade' => $note,'subject_id' => $request->input('courseId'), 'student_id' => $userID, 'assignment_id' => $current_assignment_id]
-			);
-		}
-        
-	}
-
-	/**
-	 * Update a grade to a student (same subject)
-	 * input : request (grade, coefficient)
-	 */
-	public static function updateGrade(Request $request){
-        Grade::update(
-			['grade' => $request->input('grade'), 'coefficient' => $request->input('coefficient')])
-			-> where('student_id', $request->input('student_id')
-		);
-	}
 	
-	/**
-	 * Delete a grade from a student (same subject)
-	 * input : request (grade_id)
-	 */
-	public static function deleteGrade(Request $request){
-        Grade::delete()-> where('grade_id', $request->input('grade_id'));
-    }
 
 }
