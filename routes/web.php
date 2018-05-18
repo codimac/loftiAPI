@@ -79,6 +79,17 @@ $router->group([
     $router->get('/promos/{year}', 'SubjectController@getSubjectsByPromo');
 });
 
-
-
-
+$router->group(['middleware' => 'auth:api'], function ($router) {
+    $router->get('/always/true', function () {
+        return response()->json(['ok' => 'ok']);
+    });
+    $router->post('/always/true', function () {
+        return response()->json(['ok' => 'ok']);
+    });
+    $router->put('/always/true', function () {
+        return response()->json(['ok' => 'ok']);
+    });
+    $router->patch('/always/true', function () {
+        return response()->json(['ok' => 'ok']);
+    });
+}); 
