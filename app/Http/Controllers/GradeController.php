@@ -34,12 +34,20 @@ class GradeController extends Controller
 	 */
     
    public static function getGradesStudent($student_id) {
+		if(!is_numeric($student_id))
+            return response()->json(['error' => 'Please enter a valid id student. It must be an integer.'], 415);
+
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->join('student', 'student.student_id', '=', 'grade.student_id')
 		->where('grade.student_id', $student_id)
 		->select('subject.name AS subject_name','grade.grade', 'assignment.coefficient AS grade_coefficient')
 		->orderBy('subject.name')
 		->get();
+
+		if(empty($grades)){
+			return response()->json(['error' => 'No grades for these parameters'], 400);
+		}
+	
 		return $grades;
 	}	
 
@@ -50,6 +58,9 @@ class GradeController extends Controller
 	 */
 
 	public static function getGradesStudentSubject($student_id, $subject_id) {
+		if(!is_numeric($student_id) || !is_numeric($subject_id))
+            return response()->json(['error' => 'Please enter valid ids. They must be integers.'], 415);
+
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->join('assignment', 'assignment.assignment_id', '=', 'grade.assignment_id')
 		->where([
@@ -57,6 +68,11 @@ class GradeController extends Controller
 			'grade.student_id' => $student_id
 		])->select('grade.grade', 'assignment.coefficient AS grade_coefficient')
 		->get();
+
+		if(empty($grades)){
+			return response()->json(['error' => 'No grades for these parameters'], 400);
+		}
+
 		return $grades;
 	}
 
@@ -68,6 +84,9 @@ class GradeController extends Controller
 	 */
 
 	public static function getGradesStudentUe($student_id, $ue_id) {
+		if(!is_numeric($student_id) || !is_numeric($ue_id))
+            return response()->json(['error' => 'Please enter valid ids. They must be integers.'], 415);
+
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->join('ue', 'ue.ue_id', '=', 'subject.ue_id')
 		->join('assignment', 'assignment.assignment_id', '=', 'grade.assignment_id')
@@ -77,6 +96,11 @@ class GradeController extends Controller
 		])->select('subject.name AS subject_name','subject.coefficient AS subject_coefficient', 'grade.grade', 'assignment.coefficient AS grade_coefficient')
 		->orderBy('subject.name')
 		->get();
+
+		if(empty($grades)){
+			return response()->json(['error' => 'No grades for these parameters'], 400);
+		}
+
 		return $grades;
 	}
 
@@ -88,6 +112,9 @@ class GradeController extends Controller
 	 */
 
 	public static function getGradesStudentSemester($student_id, $semester) {
+		if(!is_numeric($student_id) || !is_numeric($semester))
+            return response()->json(['error' => 'Please enter valid ids. They must be integers.'], 415);
+
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->join('ue', 'ue.ue_id', '=', 'subject.ue_id')
 		->join('assignment', 'assignment.assignment_id', '=', 'grade.assignment_id')
@@ -97,6 +124,11 @@ class GradeController extends Controller
 		])->select('ue.name AS ue_name' ,'subject.name AS subject_name','subject.coefficient AS subject_coefficient', 'grade.grade', 'assignment.coefficient AS grade_coefficient')
 		->orderBy('ue.name')
 		->get();
+
+		if(empty($grades)){
+			return response()->json(['error' => 'No grades for these parameters'], 400);
+		}
+
 		return $grades;
 	}
 
@@ -112,6 +144,9 @@ class GradeController extends Controller
 	 */
 
 	public static function getGradesPromo($year) {
+		if(!is_numeric($year))
+            return response()->json(['error' => 'Please enter a valid promo year. It must be an integer.'], 415);
+
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->join('student', 'student.student_id', '=', 'grade.student_id')
 		->join('promo', 'promo.promo_id', "=", "student.promo_id")
@@ -120,6 +155,11 @@ class GradeController extends Controller
 			'promo.year' => $promo
 		])->select('student.student_id','subject.name AS subject_name','grade.grade', 'assignment.coefficient AS grade_coefficient')
 		->get();
+
+		if(empty($grades)){
+			return response()->json(['error' => 'No grades for these parameters'], 400);
+		}
+
 		return $grades;
 	}
 
@@ -131,6 +171,9 @@ class GradeController extends Controller
 	 */
 
 	public static function getGradesPromoSubject($year, $subject_id) {
+		if(!is_numeric($year) || !is_numeric($subject_id))
+            return response()->json(['error' => 'Please enter valid parameters. They must be integers.'], 415);
+
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->join('student', 'student.student_id', '=', 'grade.student_id')
 		->join('promo', 'promo.promo_id', "=", "student.promo_id")
@@ -140,6 +183,11 @@ class GradeController extends Controller
 			'promo.year' => $year
 		])->select('student.student_id','grade.grade', 'assignment.coefficient AS grade_coefficient')
 		->get();
+
+		if(empty($grades)){
+			return response()->json(['error' => 'No grades for these parameters'], 400);
+		}
+
 		return $grades;
 	}
 
@@ -152,6 +200,9 @@ class GradeController extends Controller
 	 */
 
 	public static function getGradesPromoUe($year, $ue_id) {
+		if(!is_numeric($year) || !is_numeric($ue_id))
+            return response()->json(['error' => 'Please enter valid parameters. They must be integers.'], 415);
+
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->join('ue', 'ue.ue_id', '=', 'subject.ue_id')
 		->join('student', 'student.student_id', '=', 'grade.student_id')
@@ -163,6 +214,11 @@ class GradeController extends Controller
 		])->select('student.student_id','subject.name AS subject_name','subject.coefficient AS subject_coefficient', 'grade.grade', 'assignment.coefficient AS grade_coefficient')
 		->orderBy('subject.name')
 		->get();
+
+		if(empty($grades)){
+			return response()->json(['error' => 'No grades for these parameters'], 400);
+		}
+
 		return $grades;
 	}
 
@@ -174,6 +230,9 @@ class GradeController extends Controller
 	 */
 
 	public static function getGradesPromoSemester($year, $semester) {
+		if(!is_numeric($year) || !is_numeric($semester))
+            return response()->json(['error' => 'Please enter valid parameters. They must be integers.'], 415);
+
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->join('ue', 'ue.ue_id', '=', 'subject.ue_id')
 		->join('student', 'student.student_id', '=', 'grade.student_id')
@@ -185,6 +244,11 @@ class GradeController extends Controller
 		])->select('student.student_id','ue.name AS ue_name','subject.name AS subject_name','subject.coefficient AS subject_coefficient', 'grade.grade', 'assignment.coefficient AS grade_coefficient')
 		->orderBy('ue.name')
 		->get();
+
+		if(empty($grades)){
+			return response()->json(['error' => 'No grades for these parameters'], 400);
+		}
+
 		return $grades;
 	}
 
