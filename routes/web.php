@@ -17,13 +17,11 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-
 $router->get('/test', function() {
     return response()->json([
         'message' => 'Ce hello world vient de l\'API'
     ]);
 });
-
 
 $router->group(['prefix' => 'auth'], function($router) {
     $router->post('/signin', 'AuthController@signIn');
@@ -35,7 +33,6 @@ $router->group([
 ], function($router) {
     $router->get('/me', 'UserController@getAuthUser');
 });
-
 
 $router->group([
     'middleware' => 'auth:api',
@@ -54,7 +51,6 @@ $router->group([
     $router->post('/add', 'AssignmentController@addGradesAssignment');
 
 });
-
 
 $router->group([
     'middleware' => 'auth:api',
@@ -83,30 +79,6 @@ $router->group([
     $router->get('/promos/{year}', 'SubjectController@getSubjectsByPromo');
 });
 
-
-
-// $router->get('/assignments', 'AssignmentController@getAssignments');
-
-
-
-
-
-
-
-
-// $router->group(['middleware' => 'auth:api'], function ($router) {
-//     $router->get('/always/true', function () {
-//         return response()->json(['ok' => 'ok']);
-//     });
-// });
-
-
-
-
-
-
-//$router->post('/create', 'UserController@createUser');
-//$router->put('/update/{id}', 'UserController@updateUser');
 
 
 
