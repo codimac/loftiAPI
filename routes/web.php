@@ -33,29 +33,7 @@ $router->group([
     'middleware' => 'auth:api',
     'prefix' => 'users',
 ], function($router) {
-   $test_admin = $router->get('/me', 'UserController@getAuthUser');
-//    if($test_admin.role_id == '1'){
-//         $router->post('/grades', 'GradeController@addGradesPromo');
-//         $router->put('/grades/{grade_id}', 'GradeController@updateGrade');
-//         $router->delete('/grades/{grade_id}', 'GradeController@deleteGrade');
-//    }
-//    else{
-//        $router->post('/grades', function($router) {
-//            return response()->json([
-//                'message' => 'Vous ne pouvez pas faire ça'
-//            ]);
-//        });
-//         $router->put('/grades/{grade_id}', function($router) {
-//            return response()->json([
-//                'message' => 'Vous ne pouvez pas faire ça'
-//            ]);
-//        });
-//         $router->delete('/grades/{grade_id}', function($router) {
-//            return response()->json([
-//                'message' => 'Vous ne pouvez pas faire ça'
-//            ]);
-//        });
-//    }
+    $router->get('/me', 'UserController@getAuthUser');
 });
 
 
@@ -72,37 +50,10 @@ $router->group([
     $router->get('/promo/{year}/subject/{subject_id}', 'GradeController@getGradesPromoSubject');
     $router->get('/promo/{year}/ue/{ue_id}', 'GradeController@getGradesPromoUe');
     $router->get('/promo/{year}/semester/{semester}', 'GradeController@getGradesPromoSemester');
+
+    $router->post('/add', 'AssignmentController@addGradesAssignment');
+
 });
-
-
-
-
-
-
-
-
-// $router->group(['middleware' => 'auth:api'], function ($router) {
-//     $router->get('/always/true', function () {
-//         return response()->json(['ok' => 'ok']);
-//     });
-// });
-
-
-
-
-// $router->get('/Subject/All', 'SubjectController@getAll');
-// $router->post('/Subject/Add', 'SubjectController@createSubject');
-// $router->get('Ue/All', 'UeController@getAll');
-// $router->post('Ue/Add', 'UeController@createUe');
-
-
-
-
-
-
-$router->get('/me', 'UserController@getAuthUser');
-//$router->post('/create', 'UserController@createUser');
-//$router->put('/update/{id}', 'UserController@updateUser');
 
 
 $router->group([
@@ -131,3 +82,31 @@ $router->group([
     //Cette fonction ne marche pas
     $router->get('/promos/{year}', 'SubjectController@getSubjectsByPromo');
 });
+
+
+
+// $router->get('/assignments', 'AssignmentController@getAssignments');
+
+
+
+
+
+
+
+
+// $router->group(['middleware' => 'auth:api'], function ($router) {
+//     $router->get('/always/true', function () {
+//         return response()->json(['ok' => 'ok']);
+//     });
+// });
+
+
+
+
+
+
+//$router->post('/create', 'UserController@createUser');
+//$router->put('/update/{id}', 'UserController@updateUser');
+
+
+

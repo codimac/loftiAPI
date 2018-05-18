@@ -9,19 +9,13 @@ use App\Models\Assignment;
 class AssignmentController extends Controller
 {
 
-    /**
-     * 
-     * Sorted by UE
-     */
-
-
     public static function getAssignments(){
-        $assignmentsData = Assignment::join('grade', 'grade.assignment_id', '=', 'assignment.assignment_id') // Just to get the coefficient and the subject (grade.coefficient)
+        $assignmentsData = Assignment::join('grade', 'grade.assignment_id', '=', 'assignment.assignment_id')
         ->join('subject', 'subject.subject_id', '=', 'grade.subject_id')
         ->join('ue', 'ue.ue_id', 'subject.ue_id')
         ->join('student', 'student.student_id', '=', 'grade.student_id')
         ->join('user', 'user.user_id', '=', 'student.user_id')
-        ->select('ue.ue_id', 'ue.name AS ue_name', 'subject.subject_id', 'subject.name AS subject_name', 'assignment.assignment_id', 'assignment.name AS assignment_name', 'assignment.description', 'grade.coefficient')
+        ->select('ue.ue_id', 'ue.name AS ue_name', 'subject.subject_id', 'subject.name AS subject_name', 'assignment.assignment_id', 'assignment.name AS assignment_name', 'assignment.description', 'assignment.coefficient')
         ->orderBy("ue.ue_id")
         ->get(); 
 
@@ -31,8 +25,15 @@ class AssignmentController extends Controller
             $current_ue = $keys->first();
         }
 
+        $collection_ue = $assignmentsData->keyBy('ue_id');
+        foreach ($collection_ue as $key => $value) {
+            if($key == 'subject_id')
+                $collection_ue->put('id',$value);
+        }
+
         // return $current_ue;
-        return $assignmentsData;
+        // return $assignmentsData;
+        return $collection_ue;
 
         // $resultat->toArray();
 
@@ -74,10 +75,6 @@ class AssignmentController extends Controller
 		} 
 	}
 
-	/**
-	 * Update a grade to a student (same subject)
-	 * input : request (grade, coefficient)
-	 */
 	public static function updateGrade(Request $request){
         Grade::update(
 			['grade' => $request->input('grade'), 'coefficient' => $request->input('coefficient')])
@@ -85,10 +82,6 @@ class AssignmentController extends Controller
 		);
 	}
 	
-	/**
-	 * Delete a grade from a student (same subject)
-	 * input : request (grade_id)
-	 */
 	public static function deleteGrade(Request $request){
         Grade::delete()-> where('grade_id', $request->input('grade_id'));
     }
