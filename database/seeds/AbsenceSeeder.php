@@ -27,12 +27,12 @@ class AbsenceSeeder extends Seeder
             //$lastname = $faker->unique()->lastname;
 
             // Convert to timetamps
-            $min = strtotime('2018-05-20 00:00:00');
-            $max = strtotime('2018-05-20 00:00:00');
+            $min = strtotime('2018-03-01');
+            $max = strtotime('2018-05-20');
 
             // Generate random number using above bounds
-            $val1 = date('Y-m-d H:i:s', rand($min, $max));
-            $val2 = date('Y-m-d H:i:s', rand($min, $max));
+            $val1 = date('Y-m-d', rand($min, $max));
+            /*$val2 = date('Y-m-d H:i:s', rand($min, $max));
 
             $datetime1 = new DateTime($val1);
             $datetime2 = new DateTime($val2);
@@ -45,15 +45,16 @@ class AbsenceSeeder extends Seeder
             }else if($dif == '-'){
                 $beg = $val2;
                 $end = $val1;
-            }
+            }*/
 
             $students = Student::all(['student_id']);
             $random_stud = array_rand(json_decode($students, true));
             
             DB::table('absence')->insert([
                 'student_id' => json_decode($students, true)[$random_stud]["student_id"],
-                'beginning' => $beg,
-                'end' => $end,
+                //'beginning' => $beg,
+                //'end' => $end,
+                'date' => $val1,
                 'justified' => rand(0, 1)
             ]);
         }

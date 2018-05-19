@@ -17,7 +17,7 @@ class Absence extends Migration
             $table->increments('absence_id');
             $table->integer('student_id')->unsigned();
             $table->foreign('student_id')->references('student_id')->on('student');
-            $table->date('beginning','Y-m-d H:i:s');
+            $table->date('date','Y-m-d');
             //$table->date('beginning','Y-m-d H:i:s');
             //$table->date('end','Y-m-d H:i:s');
             //$table->integer('id_matiere');
