@@ -22,7 +22,7 @@ class AbsenceSeeder extends Seeder
         //$faker = Faker\Factory::create();
         
 
-        for ($i=0; $i<41; $i++) {
+        for ($i=0; $i<100; $i++) {
             //$firstname = $faker->firstname;
             //$lastname = $faker->unique()->lastname;
 

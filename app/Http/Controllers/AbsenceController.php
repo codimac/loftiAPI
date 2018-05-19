@@ -20,6 +20,7 @@ class AbsenceController extends Controller {
 		
 		$absences = DB::table('absence')
 		->join('student', 'student.student_id', '=', 'absence.student_id')
+		->select('student.student_id', 'absence.absence_id', 'absence.date', 'absence.justified')
 		->where('student.student_id', $student_id)
 		->get();
 
@@ -44,7 +45,8 @@ class AbsenceController extends Controller {
 
 		$students = DB::table('student')
 		->join('absence', 'student.student_id', '=', 'absence.student_id')
-		->select('student.student_id', DB::raw('count(*) as abs_count, student.student_id'))
+		->join('user', 'student.user_id', '=', 'user.user_id')
+		->select('user.user_id', 'user.lastname', 'user.firstname','student.promo_id', 'student.td', DB::raw('count(*) as abs_count, student.student_id'))
 		->where('student.promo_id', $promo)
 		->orderBy('abs_count', 'DESC')
 		->groupBy('student.student_id')
