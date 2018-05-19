@@ -12,6 +12,11 @@ class AbsenceSeeder extends Seeder
      *
      * @return void
      */
+
+    
+
+
+    
     public function run()
     {
         //$faker = Faker\Factory::create();
@@ -21,32 +26,37 @@ class AbsenceSeeder extends Seeder
             //$firstname = $faker->firstname;
             //$lastname = $faker->unique()->lastname;
 
+            // Convert to timetamps
+            $min = strtotime('2018-05-20 00:00:00');
+            $max = strtotime('2018-05-20 00:00:00');
+
+            // Generate random number using above bounds
+            $val1 = date('Y-m-d H:i:s', rand($min, $max));
+            $val2 = date('Y-m-d H:i:s', rand($min, $max));
+
+            $datetime1 = new DateTime($val1);
+            $datetime2 = new DateTime($val2);
+            $interval =date_diff($datetime1, $datetime2);
+            $dif =  $interval->format('%R%');
+
+            if($dif == '+'){
+                $beg = $val1;
+                $end = $val2;
+            }else if($dif == '-'){
+                $beg = $val2;
+                $end = $val1;
+            }
+
             $students = Student::all(['student_id']);
             $random_stud = array_rand(json_decode($students, true));
             
             DB::table('absence')->insert([
                 'student_id' => json_decode($students, true)[$random_stud]["student_id"],
-                'beginning' => randomDate(2018-05-14),
-                'end' => randomDate(2018-05-19),
+                'beginning' => $beg,
+                'end' => $end,
                 'justified' => rand(0, 1)
             ]);
         }
-    }
-
-
-
-
-    function randomDate($start_date, $end_date)
-    {
-        // Convert to timetamps
-        $min = strtotime($start_date);
-        $max = strtotime($end_date);
-
-        // Generate random number using above bounds
-        $val = rand($min, $max);
-
-        // Convert back to desired date format
-        return date('Y-m-d H:i:s', $val);
     }
 
 

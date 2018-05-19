@@ -19,15 +19,15 @@ $router->group(['prefix' => 'auth'], function($router) {
     $router->post('/signin', 'AuthController@signIn');
 });
 
-$router->group(['prefix' => 'abs'], function($router) {
+$router->group([
+	'prefix' => 'abs',
+	'middleware' => 'auth:api'
+], function($router) {
     $router->post('/create', 'AbsenceController@create');
 });
 
 
-$router->get('/test', function() {
-    return response()->json([
-        'message' => 'Ce hello world vient de l\'API'
-    ]);
+
 $router->group([
     'middleware' => 'auth:api',
     'prefix' => 'users',
@@ -54,12 +54,15 @@ $router->group([
     $router->get('/semesters/{semesterId}', 'UeController@getUesBySemester');
 });
 
+
 $router->group([
     'middleware' => 'auth:api',
     'prefix' => 'subjects',
 ], function($router) {
     $router->get('/ues/{ueId}', 'SubjectController@getSubjectsByUe');
     $router->get('/semesters/{semestrerId}', 'SubjectController@getSubjectsBySemester');
-    //Cette fonction ne marche pas
     $router->get('/promos/{year}', 'SubjectController@getSubjectsByPromo');
 });
+
+
+
