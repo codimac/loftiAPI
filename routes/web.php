@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\UserMiddleware;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -48,10 +50,26 @@ $router->group([
     $router->get('/promos/{year}/ues/{ue_id}', 'GradeController@getGradesPromoUe');
     $router->get('/promos/{year}/semesters/{semester}', 'GradeController@getGradesPromoSemester');
 
-    $router->post('/add', 'AssignmentController@addGradesAssignment');
 
+    
 });
 
+$router->group([
+    // 'middleware' => 'auth:api',
+    'middleware' => 'isAdmin',
+], function($router) {
+    $router->post('/add', 'AssignmentController@addGradesAssignment');
+});
+
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+>>>>>>> CreateReadUpdateDeleteNote
 $router->group([
     'middleware' => 'auth:api',
     'prefix' => 'promos',
@@ -78,3 +96,14 @@ $router->group([
     //Cette fonction ne marche pas
     $router->get('/promos/{year}', 'SubjectController@getSubjectsByPromo');
 });
+<<<<<<< HEAD
+=======
+
+
+
+//$router->post('/create', 'UserController@createUser');
+//$router->put('/update/{id}', 'UserController@updateUser');
+
+
+
+>>>>>>> CreateReadUpdateDeleteNote
