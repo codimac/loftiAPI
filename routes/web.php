@@ -19,12 +19,6 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('/test', function() {
-    return response()->json([
-        'message' => 'Ce hello world vient de l\'API'
-    ]);
-});
-
 $router->group(['prefix' => 'auth'], function($router) {
     $router->post('/signin', 'AuthController@signIn');
 });
@@ -34,6 +28,14 @@ $router->group([
     'prefix' => 'users',
 ], function($router) {
     $router->get('/me', 'UserController@getAuthUser');
+    $router->get('/role', 'UserController@isAdmin');
+});
+
+$router->group([
+    'middleware' => 'auth:api',
+    'prefix' => 'students',
+], function($router) {
+    $router->get('/{studentId}', 'StudentController@getStudent');
 });
 
 $router->group([
@@ -49,19 +51,7 @@ $router->group([
     $router->get('/promos/{year}/subjects/{subject_id}', 'GradeController@getGradesPromoSubject');
     $router->get('/promos/{year}/ues/{ue_id}', 'GradeController@getGradesPromoUe');
     $router->get('/promos/{year}/semesters/{semester}', 'GradeController@getGradesPromoSemester');
-
-
-    
 });
-
-$router->group([
-    // 'middleware' => 'auth:api',
-    'middleware' => 'isAdmin',
-], function($router) {
-    $router->post('/add', 'AssignmentController@addGradesAssignment');
-});
-
-
 
 $router->group([
     'middleware' => 'auth:api',
@@ -76,7 +66,7 @@ $router->group([
     'middleware' => 'auth:api',
     'prefix' => 'ues',
 ], function($router) {
-    $router->get('/semesters/', 'UeController@getAllUes');
+    $router->get('/', 'UeController@getAllUes');
     $router->get('/semesters/{semesterId}', 'UeController@getUesBySemester');
 });
 
@@ -88,6 +78,8 @@ $router->group([
     $router->get('/semesters/{semestrerId}', 'SubjectController@getSubjectsBySemester');
     //Cette fonction ne marche pas
     $router->get('/promos/{year}', 'SubjectController@getSubjectsByPromo');
+    //Cette fonction est un test (infructueux)
+    $router->get('/test/', 'SubjectController@test');
 });
 
 $router->group(['middleware' => 'auth:api'], function ($router) {
