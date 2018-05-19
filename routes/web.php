@@ -23,8 +23,10 @@ $router->group([
 	'prefix' => 'abs',
 	'middleware' => 'auth:api'
 ], function($router) {
-    $router->post('/create', 'AbsenceController@create');
+    $router->get('/student/{id}', 'AbsenceController@getAbsByStudent');
+    $router->get('/students/{promo}', 'AbsenceController@getAbsTenFisrtStudents');
 });
+
 
 
 

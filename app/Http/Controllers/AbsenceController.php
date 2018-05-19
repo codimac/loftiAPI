@@ -5,28 +5,62 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Absence;
+use App\Models\Student;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class AbsenceController extends Controller {
 
-	public function create(Request $request){
 
-		//On verifie que l'élève existe
-		User::findOrFail($request->student_id);
+	public function getAbsByStudent($student_id) {
 
-		//On verifie que la date de debut est inférieur à la date de fin
-		$dateBeg = date_create($request->beginning);
-		$dateEnd = date_create($request->end);
+		if(!is_numeric($student_id)) {
+			return response()->json(['error' => 'The supplied request data is not in a format acceptable for processing by this resource. It must be an integer.'], 415);
+		}
+		
+		$absences = DB::table('absence')
+		->join('student', 'student.student_id', '=', 'absence.student_id')
+		->where('student.student_id', $student_id)
+		->get();
 
-		$diff = date_diff($dateBeg, $dateEnd)->format('%R%');
-		if( $diff != "+"){
-			return false; //(Je ne sais pas comment renvoyer un message d'erreur)
+		$absencesArray = (array)$absences;
+		$absencesArray = array_filter($absencesArray);
+		if(empty($absencesArray)){
+			return response()->json(['error' => 'Can\'t find absence for this student.'], 400);
+
 		}
 
-    	$abs = Absence::create($request->all());
- 
-    	return response()->json($abs);
- 
+		return response()->json($absences);
+    	
+	}
+
+
+	public function getAbsTenFisrtStudents($promo) {
+
+		if(!is_numeric($promo)) {
+			return response()->json(['error' => 'The supplied request data is not in a format acceptable for processing by this resource. It must be an integer.'], 415);
+		}
+		
+
+		$students = DB::table('student')
+		->join('absence', 'student.student_id', '=', 'absence.student_id')
+		->select('student.student_id', DB::raw('count(*) as abs_count, student.student_id'))
+		->where('student.promo_id', $promo)
+		->orderBy('abs_count', 'DESC')
+		->groupBy('student.student_id')
+		->limit(10)
+		->get();
+
+		$studentsArray = (array)$students;
+		$studentsArray = array_filter($studentsArray);
+		if(empty($studentsArray)){
+			return response()->json(['error' => 'Can\'t find students for this promo.'], 400);
+
+		}
+
+		return response()->json($students);
+
+
 	}
     
 }
