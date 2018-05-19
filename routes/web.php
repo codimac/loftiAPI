@@ -41,15 +41,15 @@ $router->group([
     'middleware' => 'auth:api',
     'prefix' => 'grades',
 ], function($router) {
-    $router->get('/student/{student_id}', 'GradeController@getGradesStudent');
-    $router->get('/student/{student_id}/subject/{subject_id}', 'GradeController@getGradesStudentSubject');
-    $router->get('/student/{student_id}/ue/{ue_id}', 'GradeController@getGradesStudentUe');
-    $router->get('/student/{student_id}/semester/{semester}', 'GradeController@getGradesStudentSemester');
+    $router->get('/students/{student_id}', 'GradeController@getGradesStudent');
+    $router->get('/students/{student_id}/subjects/{subject_id}', 'GradeController@getGradesStudentSubject');
+    $router->get('/students/{student_id}/ues/{ue_id}', 'GradeController@getGradesStudentUe');
+    $router->get('/students/{student_id}/semesters/{semester}', 'GradeController@getGradesStudentSemester');
 
-    $router->get('/promo/{year}','GradeController@getGradesPromo');
-    $router->get('/promo/{year}/subject/{subject_id}', 'GradeController@getGradesPromoSubject');
-    $router->get('/promo/{year}/ue/{ue_id}', 'GradeController@getGradesPromoUe');
-    $router->get('/promo/{year}/semester/{semester}', 'GradeController@getGradesPromoSemester');
+    $router->get('/promos/{year}','GradeController@getGradesPromo');
+    $router->get('/promos/{year}/subjects/{subject_id}', 'GradeController@getGradesPromoSubject');
+    $router->get('/promos/{year}/ues/{ue_id}', 'GradeController@getGradesPromoUe');
+    $router->get('/promos/{year}/semesters/{semester}', 'GradeController@getGradesPromoSemester');
 
     $router->post('/add', 'AssignmentController@addGradesAssignment');
 
