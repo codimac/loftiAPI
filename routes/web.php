@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\UserMiddleware;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -51,9 +53,21 @@ $router->group([
     $router->get('/promos/{year}/ues/{ue_id}', 'GradeController@getGradesPromoUe');
     $router->get('/promos/{year}/semesters/{semester}', 'GradeController@getGradesPromoSemester');
 
-    $router->post('/add', 'AssignmentController@addGradesAssignment');
 
+    
 });
+
+$router->group([
+    // 'middleware' => 'auth:api',
+    'middleware' => 'isAdmin',
+], function($router) {
+    $router->post('/add', 'AssignmentController@addGradesAssignment');
+});
+
+
+
+
+
 
 
 $router->group([
@@ -82,26 +96,6 @@ $router->group([
     //Cette fonction ne marche pas
     $router->get('/promos/{year}', 'SubjectController@getSubjectsByPromo');
 });
-
-
-
-// $router->get('/assignments', 'AssignmentController@getAssignments');
-
-
-
-
-
-
-
-
-// $router->group(['middleware' => 'auth:api'], function ($router) {
-//     $router->get('/always/true', function () {
-//         return response()->json(['ok' => 'ok']);
-//     });
-// });
-
-
-
 
 
 
