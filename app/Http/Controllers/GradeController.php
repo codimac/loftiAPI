@@ -39,6 +39,7 @@ class GradeController extends Controller
 
 		$grades=Grade::join('subject', 'subject.subject_id', '=', 'grade.subject_id')
 		->join('student', 'student.student_id', '=', 'grade.student_id')
+		->join('assignment', 'assignment.assignment_id', '=', 'grade.assignment_id')
 		->where('grade.student_id', $student_id)
 		->select('subject.name AS subject_name','grade.grade', 'assignment.coefficient AS grade_coefficient')
 		->orderBy('subject.name')
