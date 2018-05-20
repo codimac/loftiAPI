@@ -28,7 +28,7 @@ $router->group([
 	'middleware' => 'auth:api'
 ], function($router) {
     $router->get('/student/{id}', 'AbsenceController@getAbsByStudent');
-    $router->get('/students/{promo}', 'AbsenceController@getAbsTenFisrtStudents');
+   //$router->get('/students/{promo}', 'AbsenceController@getAbsTenFisrtStudents');
 });
 
 
@@ -47,6 +47,7 @@ $router->group([
     'prefix' => 'students',
 ], function($router) {
     $router->get('/{studentId}', 'StudentController@getStudent');
+    $router->get('/absences/{promo}', 'StudentController@getTopAbsStudentsByPromo');
 });
 
 $router->group([
@@ -57,7 +58,6 @@ $router->group([
     $router->get('/students/{student_id}/subjects/{subject_id}', 'GradeController@getGradesStudentSubject');
     $router->get('/students/{student_id}/ues/{ue_id}', 'GradeController@getGradesStudentUe');
     $router->get('/students/{student_id}/semesters/{semester}', 'GradeController@getGradesStudentSemester');
-
     $router->get('/promos/{year}','GradeController@getGradesPromo');
     $router->get('/promos/{year}/subjects/{subject_id}', 'GradeController@getGradesPromoSubject');
     $router->get('/promos/{year}/ues/{ue_id}', 'GradeController@getGradesPromoUe');

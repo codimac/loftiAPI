@@ -36,33 +36,4 @@ class AbsenceController extends Controller {
 	}
 
 
-	public function getAbsTenFisrtStudents($promo) {
-
-		if(!is_numeric($promo)) {
-			return response()->json(['error' => 'The supplied request data is not in a format acceptable for processing by this resource. It must be an integer.'], 415);
-		}
-		
-
-		$students = DB::table('student')
-		->join('absence', 'student.student_id', '=', 'absence.student_id')
-		->join('user', 'student.user_id', '=', 'user.user_id')
-		->select('user.user_id', 'user.lastname', 'user.firstname','student.promo_id', 'student.td', DB::raw('count(*) as abs_count, student.student_id'))
-		->where('student.promo_id', $promo)
-		->orderBy('abs_count', 'DESC')
-		->groupBy('student.student_id')
-		->limit(10)
-		->get();
-
-		$studentsArray = (array)$students;
-		$studentsArray = array_filter($studentsArray);
-		if(empty($studentsArray)){
-			return response()->json(['error' => 'Can\'t find students for this promo.'], 400);
-
-		}
-
-		return response()->json($students);
-
-
-	}
-    
 }
