@@ -10,7 +10,7 @@ class Absence extends Model
 	protected $primaryKey = 'absence_id';
     public $timestamps = false;
 
- 	protected $fillable = ['student_id', 'beginning', 'end', 'justified'];
+ 	protected $fillable = ['student_id', 'date', 'justified'];
 
 }
 ?>

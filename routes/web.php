@@ -24,6 +24,17 @@ $router->group(['prefix' => 'auth'], function($router) {
 });
 
 $router->group([
+	'prefix' => 'abs',
+	'middleware' => 'auth:api'
+], function($router) {
+    $router->get('/student/{id}', 'AbsenceController@getAbsByStudent');
+   //$router->get('/students/{promo}', 'AbsenceController@getAbsTenFisrtStudents');
+});
+
+
+
+
+$router->group([
     'middleware' => 'auth:api',
     'prefix' => 'users',
 ], function($router) {
@@ -36,6 +47,7 @@ $router->group([
     'prefix' => 'students',
 ], function($router) {
     $router->get('/{studentId}', 'StudentController@getStudent');
+    $router->get('/absences/{promo}', 'StudentController@getTopAbsStudentsByPromo');
 });
 
 $router->group([
@@ -46,7 +58,6 @@ $router->group([
     $router->get('/students/{student_id}/subjects/{subject_id}', 'GradeController@getGradesStudentSubject');
     $router->get('/students/{student_id}/ues/{ue_id}', 'GradeController@getGradesStudentUe');
     $router->get('/students/{student_id}/semesters/{semester}', 'GradeController@getGradesStudentSemester');
-
     $router->get('/promos/{year}','GradeController@getGradesPromo');
     $router->get('/promos/{year}/subjects/{subject_id}', 'GradeController@getGradesPromoSubject');
     $router->get('/promos/{year}/ues/{ue_id}', 'GradeController@getGradesPromoUe');
@@ -70,17 +81,21 @@ $router->group([
     $router->get('/semesters/{semesterId}', 'UeController@getUesBySemester');
 });
 
+
 $router->group([
     'middleware' => 'auth:api',
     'prefix' => 'subjects',
 ], function($router) {
     $router->get('/ues/{ueId}', 'SubjectController@getSubjectsByUe');
     $router->get('/semesters/{semestrerId}', 'SubjectController@getSubjectsBySemester');
-    //Cette fonction ne marche pas
     $router->get('/promos/{year}', 'SubjectController@getSubjectsByPromo');
     //Cette fonction est un test (infructueux)
     $router->get('/test/', 'SubjectController@test');
 });
+
+
+
+
 
 $router->group(['middleware' => 'auth:api'], function ($router) {
     $router->get('/always/true', function () {
