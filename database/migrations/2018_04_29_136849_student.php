@@ -21,6 +21,16 @@ class Student extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('user_id')->on('user');
         });
+
+        // Schema::table('grade', function (Blueprint $table) {
+        //     $table->foreign('student_id')->references('student_id')->on('student');
+        // });
+
+        // Schema::table('grade', function (Blueprint $table) {
+        //    $table->foreign('student_id')->references('student_id')->on('student');
+        // });
+
+        
     }
 
     /**

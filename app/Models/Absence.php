@@ -3,9 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
  
-class Absence extends Model
+class Absence extends Model 
 { 
 	public $table = "absence";
 	protected $primaryKey = 'absence_id';

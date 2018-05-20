@@ -11,6 +11,3 @@ class Ue extends Model {
 
  	protected $fillable = ['semester', 'ects', 'name'];
 }
-
-// Class App\Http\Controllers\Ue does not exist
-// Sûrement une erreur toute bête...

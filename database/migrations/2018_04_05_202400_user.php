@@ -21,7 +21,6 @@ class User extends Migration
             $table->string('firstname', 64);
             $table->string('username', 64);
             $table->string('password', 100);
-
             $table->integer('role_id')->unsigned();
             $table->foreign('role_id')->references('role_id')->on('role');
         });

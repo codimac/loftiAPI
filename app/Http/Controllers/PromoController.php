@@ -13,7 +13,7 @@ class PromoController extends Controller
         $students = DB::table('student')
                         ->join('user', 'user.user_id', '=', 'student.user_id')
                         ->join('promo', 'promo.promo_id', '=', 'student.promo_id')
-                        ->select('user.firstname', 'user.lastname', 'student.td', 'promo.year')
+                        ->select('user.firstname', 'user.lastname', 'user.username', 'student.student_id', 'student.td', 'promo.year')
                         ->get();
 
         return response()->json($students);
@@ -21,13 +21,13 @@ class PromoController extends Controller
 
     public function getStudentsByPromo($year) {
         if(!is_numeric($year))
-            return response()->json(['error' => 'Please enter a valid promotion. It must be an integer.'], 415);
+            return response()->json(['error' => 'Please enter a valid promotion. It must be an integer.'], 400);
         
         $students = DB::table('student')
                     ->join('user', 'user.user_id', '=', 'student.user_id')
                     ->join('promo', 'promo.promo_id', '=', 'student.promo_id')
                     ->where('promo.year', $year)
-                    ->select('user.firstname', 'user.lastname', 'student.td', 'promo.year')
+                    ->select('user.firstname', 'user.lastname', 'user.username', 'student.student_id', 'student.td', 'promo.year')
                     ->get();
 
         $studentsArray = (array)$students;
@@ -38,38 +38,37 @@ class PromoController extends Controller
         return response()->json($students);
     }
 
-    public static function getSemestersByPromo($promo) {
-        // Si $promo n'est pas un INT
-        if(!is_numeric($promo)) {
-            return response()->json(['error' => 'The supplied request data is not in a format acceptable for processing by this resource. It must be an integer.'], 415);
+    public static function getSemestersByPromo($year) {
+        // Si $year n'est pas un INT
+        if(!is_numeric($year)) {
+            return response()->json(['error' => 'The supplied request data is not in a format acceptable for processing by this resource. It must be an integer.'], 400);
         }
 
         $date = getdate();
+        $currentYear = $date['year'];
+        $currentMonth = $date['mon'];
 
-        $year = $date['year'];
-        $mon = $date['mon'];
-
-        if($mon<8 && $year<=$promo-3)
+        if($currentMonth<8 && $currentYear<=$year-3)
             // Si la promo n'est pas encore à l'IMAC 
             return response()->json(['error' => 'Can\'t find semesters for this promo. This promo does not exist yet.'], 400);
 
-        else if(($mon>8 && $year<=$promo) || ($year>$promo))
+        else if(($currentMonth>8 && $currentYear<=$year) || ($currentYear>$year))
             // Si la promo n'est plus présente à l'IMAC 
             return response()->json(['error' => 'Can\'t find semesters for this promo. This promo does not exist anymore.'], 400);
 
         else {
             // La promo est présente à l'IMAC
-            if(($mon<8 && $year==$promo) || ($mon>8 && $year==$promo-1)) {
+            if(($currentMonth<8 && $currentYear==$year) || ($currentMonth>8 && $currentYear==$year-1)) {
                 //IMAC 3
                 return response()->json(['semesters' => array(5, 6),
                                         'name' => 'IMAC 3']);
 
-            } else if(($mon<8 && $year==$promo-1) || ($mon>8 && $year==$promo-2)) {
+            } else if(($currentMonth<8 && $currentYear==$year-1) || ($currentMonth>8 && $currentYear==$year-2)) {
                 //IMAC 2
                 return response()->json(['semesters' => array(3, 4),
                                         'name' => 'IMAC 2']);
 
-            } else if(($mon<8 && $year==$promo-2) || ($mon>8 && $year==$promo-3)) {
+            } else if(($currentMonth<8 && $currentYear==$year-2) || ($currentMonth>8 && $currentYear==$year-3)) {
                 //IMAC 1
                 return response()->json(['semesters' => array(1, 2),
                                         'name' => 'IMAC 1']);

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\UserMiddleware;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -10,6 +12,8 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
+
+
 
 $router->get('/', function () use ($router) {
     return $router->app->version();
@@ -35,8 +39,29 @@ $router->group([
     'prefix' => 'users',
 ], function($router) {
     $router->get('/me', 'UserController@getAuthUser');
-    //$router->post('/create', 'UserController@createUser');
-    //$router->put('/update/{id}', 'UserController@updateUser');
+    $router->get('/role', 'UserController@isAdmin');
+});
+
+$router->group([
+    'middleware' => 'auth:api',
+    'prefix' => 'students',
+], function($router) {
+    $router->get('/{studentId}', 'StudentController@getStudent');
+});
+
+$router->group([
+    'middleware' => 'auth:api',
+    'prefix' => 'grades',
+], function($router) {
+    $router->get('/students/{student_id}', 'GradeController@getGradesStudent');
+    $router->get('/students/{student_id}/subjects/{subject_id}', 'GradeController@getGradesStudentSubject');
+    $router->get('/students/{student_id}/ues/{ue_id}', 'GradeController@getGradesStudentUe');
+    $router->get('/students/{student_id}/semesters/{semester}', 'GradeController@getGradesStudentSemester');
+
+    $router->get('/promos/{year}','GradeController@getGradesPromo');
+    $router->get('/promos/{year}/subjects/{subject_id}', 'GradeController@getGradesPromoSubject');
+    $router->get('/promos/{year}/ues/{ue_id}', 'GradeController@getGradesPromoUe');
+    $router->get('/promos/{year}/semesters/{semester}', 'GradeController@getGradesPromoSemester');
 });
 
 $router->group([
@@ -52,7 +77,7 @@ $router->group([
     'middleware' => 'auth:api',
     'prefix' => 'ues',
 ], function($router) {
-    $router->get('/semesters/', 'UeController@getAllUes');
+    $router->get('/', 'UeController@getAllUes');
     $router->get('/semesters/{semesterId}', 'UeController@getUesBySemester');
 });
 
@@ -64,7 +89,25 @@ $router->group([
     $router->get('/ues/{ueId}', 'SubjectController@getSubjectsByUe');
     $router->get('/semesters/{semestrerId}', 'SubjectController@getSubjectsBySemester');
     $router->get('/promos/{year}', 'SubjectController@getSubjectsByPromo');
+    //Cette fonction est un test (infructueux)
+    $router->get('/test/', 'SubjectController@test');
 });
 
 
 
+
+
+$router->group(['middleware' => 'auth:api'], function ($router) {
+    $router->get('/always/true', function () {
+        return response()->json(['ok' => 'ok']);
+    });
+    $router->post('/always/true', function () {
+        return response()->json(['ok' => 'ok']);
+    });
+    $router->put('/always/true', function () {
+        return response()->json(['ok' => 'ok']);
+    });
+    $router->patch('/always/true', function () {
+        return response()->json(['ok' => 'ok']);
+    });
+}); 

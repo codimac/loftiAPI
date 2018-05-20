@@ -8,6 +8,18 @@ use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
+    public function getStudent($studentId) {
+
+        $student = DB::table('student')
+                        ->join('user', 'user.user_id', '=', 'student.user_id')
+                        ->join('promo', 'promo.promo_id', '=', 'student.promo_id')
+                        ->where('student.student_id', $studentId)
+                        ->select('user.firstname', 'user.lastname', 'user.username', 'student.student_id', 'student.td', 'promo.year')
+                        ->get();
+ 
+        return response()->json($student);
+    }
+
     /*public function create(Request $request) {
 
         $student = Student::create($request->all());
