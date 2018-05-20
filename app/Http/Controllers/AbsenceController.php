@@ -21,7 +21,7 @@ class AbsenceController extends Controller {
 		$absences = DB::table('absence')
 		->join('student', 'student.student_id', '=', 'absence.student_id')
 		->join('user', 'student.user_id', '=', 'user.user_id')
-		->select('student.student_id', 'user.username' 'absence.absence_id', 'absence.date', 'absence.justified')
+		->select('student.student_id', 'user.username', 'absence.absence_id', 'absence.date', 'absence.justified')
 		->where('student.student_id', $student_id)
 		->get();
 
