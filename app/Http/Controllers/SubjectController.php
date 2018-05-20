@@ -29,7 +29,6 @@ class SubjectController extends Controller
     	}
 	}
 
-
 	public function getSubjectsBySemester($semesterId) {
 		// Si $semesterId n'est pas un INT
 		if(!is_numeric($semesterId)) {
@@ -85,40 +84,28 @@ class SubjectController extends Controller
 			}
         }
 
-        /* METHODE DE AUBANE : mix de matières de plusieurs promos
-    		if(($currentMonth<8 && $currentYear==$promo) || ($currentMonth>8 && $currentYear==$promo-1)){
- 				$ues = UE::whereIn('semester', array(5,6))->get();
- 			}else if(($currentMonth<8 && $currentYear==$promo-1) || ($currentMonth>8 && $currentYear==$promo-2)){
- 				$ues = UE::whereIn('semester', array(3,4))->get();
- 			}else if(($currentMonth<8 && $currentYear==$promo-2) || ($currentMonth>8 && $currentYear==$promo-3)){
- 				$ues = UE::whereIn('semester', array(1,2))->get();				
- 			}
- 
-			$subjects = Subject::whereIn('ue_id', $ues)->get();
-        */
-
 		/* Double requête : un semestre écrase l'autre. Ne fonctionne pas non plus avec un foreach. */
 		$ues = UE::where('semester', $semesters)->get(['ue_id']);
 		$subjects = Subject::whereIn('ue_id', $ues)->get();
 
+        /* La jointure fonctionne bien sur phpmyadmin mais je n'arrive pas à obtenir les matières pour les deux semestres. Au mieux, j'arrive à récupérer celle du premier ou du deuximèe semestre seul, l'une écrasant l'autre. */
+        /* foreach ($semesters as $semester) {
+            if(isset($subjects)) {
+                $subjects += DB::table('subject')
+                    ->join('ue', 'ue.ue_id', '=', 'subject.ue_id')
+                    ->where('ue.semester', $semester)
+                    ->get();
+            }
+            else {
+                $subjects = DB::table('subject')
+                    ->join('ue', 'ue.ue_id', '=', 'subject.ue_id')
+                    ->where('ue.semester', $semester)
+                    ->get();
+            }
+        }*/
+
 		/* L'appel à une fonction d'un autre controller n'est pas concluant car celle-ci renvoie plus de data que nécessaire */
 		// $subjects = $this->getSubjectsBySemester($semesters);
-
-		/* La jointure fonctionne bien sur phpmyadmin mais je n'arrive pas à obtenir les matières pour les deux semestres (au mieux, j'arrive à récupérer celle du premier ou du deuximèe semestre seul) */
-        /* foreach ($semesters as $semester) {
-        	if(isset($subjects)) {
-	        	$subjects += DB::table('subject')
-		            ->join('ue', 'ue.ue_id', '=', 'subject.ue_id')
-		            ->where('ue.semester', $semester)
-		            ->get();
-        	}
-        	else {
-        		$subjects = DB::table('subject')
-					->join('ue', 'ue.ue_id', '=', 'subject.ue_id')
-					->where('ue.semester', $semester)
-					->get();
-        	}
-        }*/
 
 		// Si le tableau est vide (aucune matière trouvée)
 		$subjectArray = (array)$subjects;
@@ -129,10 +116,4 @@ class SubjectController extends Controller
     		return response()->json($subjects);
     	}
 	}
-    
-    /*
-    public function test() {
-        return User::isAdmin();
-    }
-    */
 }

@@ -13,8 +13,6 @@ use App\Http\Middleware\UserMiddleware;
 |
 */
 
-
-
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
@@ -28,11 +26,7 @@ $router->group([
 	'middleware' => 'auth:api'
 ], function($router) {
     $router->get('/student/{id}', 'AbsenceController@getAbsByStudent');
-   //$router->get('/students/{promo}', 'AbsenceController@getAbsTenFisrtStudents');
 });
-
-
-
 
 $router->group([
     'middleware' => 'auth:api',
@@ -60,6 +54,7 @@ $router->group([
     $router->get('/students/{student_id}/subjects/{subject_id}', 'GradeController@getGradesStudentSubject');
     $router->get('/students/{student_id}/ues/{ue_id}', 'GradeController@getGradesStudentUe');
     $router->get('/students/{student_id}/semesters/{semester}', 'GradeController@getGradesStudentSemester');
+
     $router->get('/promos/{year}','GradeController@getGradesPromo');
     $router->get('/promos/{year}/subjects/{subject_id}', 'GradeController@getGradesPromoSubject');
     $router->get('/promos/{year}/ues/{ue_id}', 'GradeController@getGradesPromoUe');
@@ -90,7 +85,6 @@ $router->group([
     $router->get('/semesters/{semesterId}', 'UeController@getUesBySemester');
 });
 
-
 $router->group([
     'middleware' => 'auth:api',
     'prefix' => 'subjects',
@@ -101,10 +95,6 @@ $router->group([
     //Cette fonction est un test (infructueux)
     $router->get('/test/', 'SubjectController@test');
 });
-
-
-
-
 
 $router->group(['middleware' => 'auth:api'], function ($router) {
     $router->get('/always/true', function () {

@@ -12,16 +12,10 @@ class AbsenceSeeder extends Seeder
      *
      * @return void
      */
-
-    
-
-
-    
     public function run()
     {
         //$faker = Faker\Factory::create();
         
-
         for ($i=0; $i<100; $i++) {
             //$firstname = $faker->firstname;
             //$lastname = $faker->unique()->lastname;
@@ -36,8 +30,8 @@ class AbsenceSeeder extends Seeder
 
             $datetime1 = new DateTime($val1);
             $datetime2 = new DateTime($val2);
-            $interval =date_diff($datetime1, $datetime2);
-            $dif =  $interval->format('%R%');
+            $interval = date_diff($datetime1, $datetime2);
+            $dif = $interval->format('%R%');
 
             if($dif == '+'){
                 $beg = $val1;
@@ -52,15 +46,11 @@ class AbsenceSeeder extends Seeder
             
             DB::table('absence')->insert([
                 'student_id' => json_decode($students, true)[$random_stud]["student_id"],
+                'date' => $val1,
                 //'beginning' => $beg,
                 //'end' => $end,
-                'date' => $val1,
                 'justified' => rand(0, 1)
             ]);
         }
     }
-
-
-
-
 }
