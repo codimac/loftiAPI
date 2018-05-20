@@ -54,6 +54,8 @@ $router->group([
     'middleware' => 'auth:api',
     'prefix' => 'grades',
 ], function($router) {
+    $router->post('/add', 'GradeController@addGrade');
+
     $router->get('/students/{student_id}', 'GradeController@getGradesStudent');
     $router->get('/students/{student_id}/subjects/{subject_id}', 'GradeController@getGradesStudentSubject');
     $router->get('/students/{student_id}/ues/{ue_id}', 'GradeController@getGradesStudentUe');
@@ -62,6 +64,13 @@ $router->group([
     $router->get('/promos/{year}/subjects/{subject_id}', 'GradeController@getGradesPromoSubject');
     $router->get('/promos/{year}/ues/{ue_id}', 'GradeController@getGradesPromoUe');
     $router->get('/promos/{year}/semesters/{semester}', 'GradeController@getGradesPromoSemester');
+});
+
+$router->group([
+    'middleware' => 'auth:api',
+    'prefix' => 'assignments',
+], function($router) {
+    $router->post('/add', 'AssignmentController@addAssignment');
 });
 
 $router->group([
