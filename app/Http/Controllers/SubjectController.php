@@ -19,7 +19,7 @@ class SubjectController extends Controller
 
     	$subjects = Subject::where('ue_id', $ueId)->get();
 
-		// Si l'UE n'hésiste pas 
+		// Si l'UE n'existe pas 
     	$subjectArray = (array)$subjects;
 		$subjectArray = array_filter($subjectArray);
     	if(empty($subjectArray)) {

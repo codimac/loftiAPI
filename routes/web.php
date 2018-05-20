@@ -92,8 +92,6 @@ $router->group([
     $router->get('/ues/{ueId}', 'SubjectController@getSubjectsByUe');
     $router->get('/semesters/{semestrerId}', 'SubjectController@getSubjectsBySemester');
     $router->get('/promos/{year}', 'SubjectController@getSubjectsByPromo');
-    //Cette fonction est un test (infructueux)
-    $router->get('/test/', 'SubjectController@test');
 });
 
 $router->group(['middleware' => 'auth:api'], function ($router) {
