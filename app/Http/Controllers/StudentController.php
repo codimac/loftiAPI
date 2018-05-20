@@ -35,7 +35,7 @@ class StudentController extends Controller
         ->join('absence', 'student.student_id', '=', 'absence.student_id')
         ->join('user', 'student.user_id', '=', 'user.user_id')
         ->join('promo', 'promo.promo_id', "=", "student.promo_id")
-        ->select('user.user_id', 'user.lastname', 'user.firstname','student.promo_id', 'student.td', DB::raw('count(*) as abs_count, student.student_id'))
+        ->select('user.user_id', 'user.username', 'user.lastname', 'user.firstname','student.promo_id', 'student.td', DB::raw('count(*) as abs_count, student.student_id'))
         ->where('promo.year', $promo)
         ->orderBy('abs_count', 'DESC')
         ->groupBy('student.student_id')
